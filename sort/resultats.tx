@@ -1,0 +1,10 @@
+Pour n = 10000 (évidemment le temps dépend de la machine - temps en ms)
+
+
+Bubble Sort => { avgWrites: 49_963_752, avgComps: 49_995_000, avgTime: 137 } [Complexité espace O(1)]
+Selection Sort => { avgWrites: 20_000, avgComps: 49_995_000, avgTime: 94 } [Complexité espace O(1)]
+Insertion Sort => { avgWrites: 25_012_520, avgComps: 25_022_519, avgTime: 48 } [Complexité espace O(1)]
+
+Merge Sort => { avgWrites: 267_232, avgComps: 120_453, avgTime: 2 } [Complexité espace O(n)]
+Quick Sort => { avgWrites: 170_880, avgComps: 156_072, avgTime: 1 } [Complexité espace O(1)] Plus rapide car utilise moins de mémoire.
+

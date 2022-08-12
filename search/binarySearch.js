@@ -25,10 +25,14 @@ function binarySearch(sortedArray, key) {
 }
 
 const arrayOperations = [];
-const arr = Array.from({ length: 100000000 }, (x, i) => i);
+const arrayLength = 100000000;
+const arr = Array.from({ length: arrayLength }, (x, i) => i);
 for (let i = 0; i < 1000; i++) {
   const t0 = performance.now();
-  const comparaisons = binarySearch(arr, Math.floor(Math.random() * 10000));
+  const comparaisons = binarySearch(
+    arr,
+    Math.floor(Math.random() * arrayLength)
+  );
   const t1 = performance.now();
   const time = t1 - t0;
   arrayOperations.push({ comparaisons, time });

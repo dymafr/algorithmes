@@ -24,17 +24,25 @@ function binarySearch(sortedArray, key) {
   return -1;
 }
 
-const operations = [];
-const arr = Array.from({ length: 10000 }, (x, i) => i);
-for (let i = 0; i < 10000000; i++) {
+const arrayOperations = [];
+const arr = Array.from({ length: 100000000 }, (x, i) => i);
+for (let i = 0; i < 1000; i++) {
+  const t0 = performance.now();
   const comparaisons = binarySearch(arr, Math.floor(Math.random() * 10000));
-  operations.push(comparaisons);
+  const t1 = performance.now();
+  const time = t1 - t0;
+  arrayOperations.push({ comparaisons, time });
 }
-const totalOps = operations.reduce((acc, curr) => {
-  acc += curr;
-  return acc;
-}, 0);
+const totalOps = arrayOperations.reduce(
+  (acc, curr) => {
+    acc.comparaisons += curr.comparaisons;
+    acc.time += curr.time;
+    return acc;
+  },
+  { comparaisons: 0, time: 0 }
+);
 const resultat = {
-  avgComps: Math.round(totalOps / operations.length),
+  avgComps: Math.round(totalOps.comparaisons / arrayOperations.length),
+  avgTime: Math.round(totalOps.time / arrayOperations.length),
 };
 console.log(resultat);

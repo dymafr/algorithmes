@@ -25,7 +25,7 @@ function binarySearch(sortedArray, key) {
 }
 
 const arrayOperations = [];
-const arrayLength = 100000000;
+const arrayLength = 100_000_000;
 const iterations = 1000;
 const arr = Array.from({ length: arrayLength }, (x, i) => i);
 for (let i = 0; i < iterations; i++) {

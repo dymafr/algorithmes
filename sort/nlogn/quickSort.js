@@ -1,4 +1,4 @@
-import operationsAvg from '../operationsAvg.mjs';
+import operationsAvg from '../operationsAvg.js';
 // Pour n on a :
 // k n log n comparaisons et écritures en moyenne
 

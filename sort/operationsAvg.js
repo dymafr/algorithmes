@@ -1,4 +1,4 @@
-import arrayGenerator from './arrayGenerator.mjs';
+import arrayGenerator from './arrayGenerator.js';
 
 export default (fonctionDeTri) => {
   const n = 10000;

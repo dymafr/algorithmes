@@ -1,6 +1,6 @@
 class StaticArray {
   constructor() {
-    this.value = [];
+    this.value = new Array(0);
   }
 
   insertAtBeginning(item) {
@@ -41,21 +41,30 @@ class StaticArray {
     }
   }
 
-  removeFirst() {
-    const newArray = new Array(this.value.length - 1);
-    for (let i = 1; i < this.value.length; i++) {
-      newArray[i - 1] = this.value[i];
+  removeAtBeginning() {
+    if (this.value.length === 0) {
+      return;
+    } else {
+      const newArray = new Array(this.value.length - 1);
+      for (let i = 1; i < this.value.length; i++) {
+        newArray[i - 1] = this.value[i];
+      }
+      this.value = newArray;
     }
-    this.value = newArray;
   }
 
-  removeLast() {
-    const newArray = new Array(this.value.length - 1);
-    for (let i = 0; i < this.value.length - 1; i++) {
-      newArray[i] = this.value[i];
+  removeAtEnd() {
+    if (this.value.length === 0) {
+      return;
+    } else {
+      const newArray = new Array(this.value.length - 1);
+      for (let i = 0; i < this.value.length - 1; i++) {
+        newArray[i] = this.value[i];
+      }
+      this.value = newArray;
     }
-    this.value = newArray;
   }
+
   removeAtPosition(position) {
     if (position < 0 || position >= this.value.length) {
       throw new Error('wrong input');

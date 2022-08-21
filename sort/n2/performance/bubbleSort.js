@@ -1,8 +1,4 @@
-import operationsAvg from '../operationsAvg.js';
-
-// Pour n on a :
-// - n^2 / 2 comparaisons en moyenne
-// - n^2 / 2  écritures en moyenne
+import operationsAvg from '../../operationsAvg.js';
 
 function bubbleSort(arr) {
   const arrayOperations = {
@@ -12,9 +8,9 @@ function bubbleSort(arr) {
   };
   const t0 = performance.now();
 
-  const isSwapped = false;
-
+  let isSwapped = false;
   const len = arr.length;
+
   for (let i = 0; i < len; i++) {
     isSwapped = false;
     for (let j = 0; j < len - i - 1; j++) {

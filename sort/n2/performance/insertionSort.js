@@ -1,4 +1,4 @@
-import operationsAvg from '../operationsAvg.js';
+import operationsAvg from '../../operationsAvg.js';
 
 // Pour n on a :
 // - n^2 / 4 comparaisons en moyenne
@@ -15,15 +15,15 @@ function insertionSort(arr) {
   const len = arr.length;
   for (let i = 1; i < len; i++) {
     let current = arr[i];
-    let j = i - 1;
-    while (j > -1 && current < arr[j]) {
+    let j = i;
+    while (j > 0 && current < arr[j - 1]) {
       arrayOperations.comparaisons++;
-      arr[j + 1] = arr[j];
+      arr[j] = arr[j - 1];
       arrayOperations.writes++;
       j--;
     }
     arrayOperations.comparaisons += 2;
-    arr[j + 1] = current;
+    arr[j] = current;
     arrayOperations.writes++;
   }
   const t1 = performance.now();

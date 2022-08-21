@@ -1,4 +1,4 @@
-import operationsAvg from '../operationsAvg.js';
+import operationsAvg from '../../operationsAvg.js';
 
 // Pour n on a :
 // - n^2 / 2 comparaisons en moyenne

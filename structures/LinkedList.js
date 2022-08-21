@@ -40,11 +40,10 @@ export class LinkedList {
     } else if (position === 0) {
       this.head = new Node(value, this.head);
     } else {
-      let i = 1;
       let current = this.head;
-      while (i < position) {
+      while (position - 1) {
         current = current.next;
-        i++;
+        position--;
       }
       current.next = new Node(value, current.next);
     }
@@ -67,16 +66,15 @@ export class LinkedList {
    * @param {number} position - index de la position à partir de 0
    */
   get(position) {
-    if (position < 0 || position > this.size) {
-      throw new Error('Index en dehors des limites');
+    if (position < 0 || position > this.size - 1) {
+      return null;
     } else {
-      let i = 0;
       let current = this.head;
-      while (i < position) {
+      while (position) {
         current = current.next;
-        i++;
+        position--;
       }
-      return current ?? undefined;
+      return current;
     }
   }
   /**
@@ -98,35 +96,35 @@ export class LinkedList {
    * @return {*} valeur - tout type
    */
   removeLast() {
-    let lastNode;
-    if (!this.head) {
-      return undefined;
-    } else if (!this.head.next) {
-      lastNode = this.head;
+    let current = this.head;
+    if (!current) {
+      return null;
+    } else if (!current.next) {
       this.head = null;
+      this.size--;
+      return current.value;
     } else {
-      let current = this.head;
-      while (current.next?.next) {
+      while (current.next.next) {
         current = current.next;
       }
-      lastNode = current.next;
+      const lastNode = current.next;
       current.next = null;
+      this.size--;
+      return lastNode.value;
     }
-    this.size--;
-    return lastNode.value;
   }
   /**
    * Supprime et retourne le premier élément.
    * @return {*} valeur - tout type
    */
   removeFirst() {
-    if (!this.head) {
-      return undefined;
+    let current = this.head;
+    if (!current) {
+      return null;
     } else {
-      const oldHead = this.head;
-      this.head = this.head.next;
+      this.head = current.next;
       this.size--;
-      return oldHead.value;
+      return current.value;
     }
   }
   /**
@@ -136,25 +134,23 @@ export class LinkedList {
    * @return {*} valeur - tout type
    */
   remove(position) {
-    let removed;
-    if (position < 0 || position > this.size) {
+    if (position < 0 || position > this.size - 1) {
       throw new Error('Index en dehors des limites');
     } else if (position === 0) {
-      removed = this.head;
-      this.head = this.head.next;
+      return this.removeFirst();
     } else {
-      let i = 0;
       let current = this.head;
-      while (i < position - 1) {
+      while (position - 1) {
         current = current.next;
-        i++;
+        position--;
       }
-      removed = current.next;
-      current.next = current.next.next ?? null;
+      const nodeValue = current.next.value;
+      current.next = current.next.next;
+      this.size--;
+      return nodeValue;
     }
-    this.size--;
-    return removed.value;
   }
+
   /**
    * Affiche la liste (fonctionne que sur Node.js).
    */
@@ -167,13 +163,3 @@ export class LinkedList {
     process.stdout.write('null \n');
   }
 }
-
-const linkedList = new LinkedList();
-
-linkedList.addLast(1);
-linkedList.addLast(2);
-linkedList.addLast(3);
-linkedList.addLast(4);
-linkedList.remove(3);
-
-linkedList.print();

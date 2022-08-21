@@ -77,24 +77,33 @@ describe('##Suite de tests pour listes chaînées', () => {
         expect(list.size).toBe(5);
       });
     });
+
+    describe('avec un index à la fin', () => {
+      test("insert correctement l'élément", () => {
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+        list.add(3, 40);
+        const node = list.get(3);
+
+        expect(node.value).toBe(40);
+        expect(node.next).toBe(null);
+        expect(list.size).toBe(4);
+      });
+    });
   });
 
   describe('#get par index', () => {
     describe('avec un index inférieur à 0', () => {
-      test('une erreur est renvoyée', () => {
-        expect(() => {
-          list.get(-1);
-        }).toThrow('Index en dehors des limites');
+      test('null est renvoyé', () => {
+        expect(list.get(-1)).toBe(null);
       });
     });
 
     describe('avec un index supérieur à la taille de la liste', () => {
-      test('une erreur est renvoyée', () => {
+      test('null est renvoyé', () => {
         list.addLast(10);
-
-        expect(() => {
-          list.get(10);
-        }).toThrow('Index en dehors des limites');
+        expect(list.get(1)).toBe(null);
       });
     });
 
@@ -112,6 +121,16 @@ describe('##Suite de tests pour listes chaînées', () => {
         list.addLast(20);
         list.addLast(30);
         list.addLast(40);
+
+        expect(list.get(2).value).toBe(30);
+      });
+    });
+
+    describe('avec le dernier index', () => {
+      test("cela renvoie l'élément", () => {
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
 
         expect(list.get(2).value).toBe(30);
       });
@@ -135,7 +154,7 @@ describe('##Suite de tests pour listes chaînées', () => {
   describe('#Suppression du premier élément', () => {
     describe('avec une liste vide', () => {
       test('ne retourne rien', () => {
-        expect(list.removeFirst()).toBe(undefined);
+        expect(list.removeFirst()).toBe(null);
       });
     });
     describe("avec une liste d'un élément", () => {
@@ -163,7 +182,7 @@ describe('##Suite de tests pour listes chaînées', () => {
   describe('#Suppression du dernier élément', () => {
     describe('avec une liste vide', () => {
       test('ne retourne rien', () => {
-        expect(list.removeLast()).toBe(undefined);
+        expect(list.removeLast()).toBe(null);
       });
     });
     describe("avec une liste d'un élément", () => {
@@ -243,7 +262,7 @@ describe('##Suite de tests pour listes chaînées', () => {
         const removed = list.remove(3);
         const node = list.get(3);
         expect(removed).toBe(40);
-        expect(node).toBe(undefined);
+        expect(node).toBe(null);
         expect(list.size).toBe(3);
       });
     });

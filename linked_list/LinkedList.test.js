@@ -55,7 +55,6 @@ describe('##Suite de tests pour listes chaînées', () => {
         list.addLast(10);
         list.addLast(20);
         list.add(0, 30);
-        list.print();
 
         expect(list.head.value).toBe(30);
         expect(list.head.next.value).toBe(10);

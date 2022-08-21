@@ -1,7 +1,5 @@
 // Implementation avec specs Java
-// Liste chaînée disponible en Java et C++ mais pas dans la plupart des langages
-
-class Node {
+export class Node {
   constructor(value, next = null) {
     this.value = value;
     this.next = next;

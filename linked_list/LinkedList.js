@@ -52,11 +52,7 @@ export class LinkedList {
    * @param {*} valeur tout type
    */
   addFirst(value) {
-    if (this.head) {
-      this.head = new Node(value, this.head);
-    } else {
-      this.head = new Node(value);
-    }
+    this.head = new Node(value, this.head);
     this.size++;
   }
   /**
@@ -158,6 +154,6 @@ export class LinkedList {
       process.stdout.write(`${current.value} -> `);
       current = current.next;
     }
-    process.stdout.write('null \n');
+    console.log(null);
   }
 }

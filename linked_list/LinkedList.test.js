@@ -193,6 +193,17 @@ describe('##Suite de tests pour listes chaînées', () => {
         expect(list.size).toBe(0);
       });
     });
+    describe('avec une liste de deux éléments', () => {
+      test('supprime et retourne une liste avec un élément', () => {
+        list.addLast(1);
+        list.addLast(2);
+        const removed = list.removeLast();
+        expect(removed).toBe(2);
+        expect(list.head.value).toBe(1);
+        expect(list.head.next).toBe(null);
+        expect(list.size).toBe(1);
+      });
+    });
     describe('avec une liste de trois éléments', () => {
       test('supprime et retourne une liste avec deux éléments', () => {
         list.addLast(1);
@@ -221,7 +232,7 @@ describe('##Suite de tests pour listes chaînées', () => {
         list.addFirst(10);
 
         expect(() => {
-          list.remove(3);
+          list.remove(1);
         }).toThrow('Index en dehors des limites');
       });
     });
@@ -233,6 +244,39 @@ describe('##Suite de tests pour listes chaînées', () => {
         const removed = list.remove(0);
         expect(removed).toBe(10);
         expect(list.head.value).toBe(20);
+        expect(list.size).toBe(1);
+      });
+    });
+
+    describe("avec une liste d'un élément et la position 0", () => {
+      test('supprime et retourne une liste vide', () => {
+        list.addLast(42);
+        const removed = list.remove(0);
+        expect(removed).toBe(42);
+        expect(list.head).toBe(null);
+        expect(list.size).toBe(0);
+      });
+    });
+    describe('avec une liste de deux éléments et la position 1', () => {
+      test('supprime et retourne une liste avec un élément', () => {
+        list.addLast(1);
+        list.addLast(2);
+        const removed = list.remove(1);
+        expect(removed).toBe(2);
+        expect(list.head.value).toBe(1);
+        expect(list.head.next).toBe(null);
+        expect(list.size).toBe(1);
+      });
+    });
+
+    describe('avec une liste de deux éléments', () => {
+      test('supprime et retourne une liste avec un élément', () => {
+        list.addLast(1);
+        list.addLast(2);
+        const removed = list.remove(0);
+        expect(removed).toBe(1);
+        expect(list.head.value).toBe(2);
+        expect(list.head.next).toBe(null);
         expect(list.size).toBe(1);
       });
     });

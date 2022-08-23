@@ -23,10 +23,3 @@ export function insertionSort(ll) {
     ll.head = sortedList.head;
   }
 }
-
-// const linkedList = new LinkedList();
-// linkedList.addFirst(1);
-// linkedList.addFirst(2);
-// linkedList.print();
-// insertionSort(linkedList);
-// linkedList.print();

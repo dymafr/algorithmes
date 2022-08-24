@@ -22,4 +22,5 @@ export function insertionSort(ll) {
     }
     ll.head = sortedList.head;
   }
+  return ll;
 }

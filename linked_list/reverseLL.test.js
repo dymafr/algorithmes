@@ -10,7 +10,7 @@ describe("##Suite de tests pour l'inversion de liste chaînée", () => {
 
   describe('#Si la liste est vide', () => {
     test('cela ne fait rien', () => {
-      expect(reverse(list)).toBe(undefined);
+      expect(reverse(list)).toBe(list);
     });
   });
 
@@ -21,33 +21,34 @@ describe("##Suite de tests pour l'inversion de liste chaînée", () => {
       expect(list.head.value).toBe(1);
     });
   });
+});
 
-  describe('#Si la liste fait trois éléments cela fonctionne', () => {
-    test('la liste est inversée', () => {
-      list.addLast(1);
-      list.addLast(2);
-      list.addLast(3);
-      reverse(list);
-      expect(list.head.value).toBe(3);
-      expect(list.head.next.value).toBe(2);
-      expect(list.head.next.next.value).toBe(1);
+describe('##Tests randomisés', () => {
+  let list,
+    reversedList,
+    reversedArray,
+    array = null;
+
+  beforeEach(() => {
+    array = Array(20)
+      .fill()
+      .map(() => Math.round(Math.random() * 20));
+    reversedArray = [...array].reverse();
+    list = new LinkedList();
+    array.forEach((el) => {
+      list.addLast(el);
+    });
+    reversedList = new LinkedList();
+    reversedArray.forEach((el) => {
+      reversedList.addLast(el);
     });
   });
 
-  describe('#Si la liste fait cinq éléments cela fonctionne', () => {
-    test('la liste est inversée', () => {
-      list.addLast(1);
-      list.addLast(2);
-      list.addLast(3);
-      list.addLast(4);
-      list.addLast(5);
-      reverse(list);
-      expect(list.head.value).toBe(5);
-      expect(list.head.next.value).toBe(4);
-      expect(list.head.next.next.value).toBe(3);
-      expect(list.head.next.next.next.value).toBe(2);
-      expect(list.head.next.next.next.next.value).toBe(1);
-      expect(list.head.next.next.next.next.next).toBe(null);
-    });
+  describe('#Tests dynamiques randomisés', () => {
+    for (let i = 0; i < 100; i++) {
+      test('la liste est toujours triée', () => {
+        expect(reverse(list)).toStrictEqual(reversedList);
+      });
+    }
   });
 });

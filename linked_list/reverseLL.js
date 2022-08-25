@@ -1,7 +1,7 @@
 export function reverse(ll) {
   let current = ll.head;
   if (!current || !current.next) {
-    return;
+    return ll;
   } else {
     let prev = null;
     while (current) {
@@ -12,4 +12,5 @@ export function reverse(ll) {
     }
     ll.head = prev;
   }
+  return ll;
 }

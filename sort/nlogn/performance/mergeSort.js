@@ -1,4 +1,4 @@
-import operationsAvg from '../operationsAvg.js';
+import operationsAvg from '../../operationsAvg.js';
 // Pour n on a :
 // n log n - 2^(log n) comparaisons en moyenne
 

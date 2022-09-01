@@ -1,5 +1,6 @@
 import arrayGenerator from '../sort/arrayGenerator.js';
 
+// O(n) = log n
 function recursive_binary_search(
   key,
   sortedArray,

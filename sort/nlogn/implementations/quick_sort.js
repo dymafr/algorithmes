@@ -1,4 +1,4 @@
-function pivot(arr, start, end) {
+function partition(arr, start, end) {
   const pivot = arr[start];
   let pivotIndex = start;
   for (let i = start + 1; i <= end; i++) {
@@ -17,7 +17,7 @@ function pivot(arr, start, end) {
 
 function quickSort(arr, start = 0, end = arr.length - 1) {
   if (start >= end) return;
-  let pivotIndex = pivot(arr, start, end);
+  let pivotIndex = partition(arr, start, end);
   quickSort(arr, start, pivotIndex - 1);
   quickSort(arr, pivotIndex + 1, end);
   return arr;

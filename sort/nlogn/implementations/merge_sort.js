@@ -1,38 +1,50 @@
-function mergeArrays(leftArray, rightArray) {
-  let mergedArr = [];
+function mergeArrays(arr, left, middle, right) {
+  const leftArrayLength = middle - left + 1;
+  const rightArrayLength = right - middle;
+  const leftArray = [];
+  const rightArray = [];
+  for (let i = 0; i < leftArrayLength; i++) {
+    leftArray[i] = arr[left + i];
+  }
+  for (let j = 0; j < rightArrayLength; j++) {
+    rightArray[j] = arr[middle + j + 1];
+  }
   let leftIndex = 0;
   let rightIndex = 0;
+  let indexToFill = left;
 
-  while (leftIndex < leftArray.length && rightIndex < rightArray.length) {
+  while (leftIndex < leftArrayLength && rightIndex < rightArrayLength) {
     if (leftArray[leftIndex] < rightArray[rightIndex]) {
-      mergedArr.push(leftArray[leftIndex]);
+      arr[indexToFill] = leftArray[leftIndex];
       leftIndex++;
     } else {
-      mergedArr.push(rightArray[rightIndex]);
+      arr[indexToFill] = rightArray[rightIndex];
       rightIndex++;
     }
+    indexToFill++;
   }
-  while (leftIndex < leftArray.length) {
-    mergedArr.push(leftArray[leftIndex]);
+  while (leftIndex < leftArrayLength) {
+    arr[indexToFill] = leftArray[leftIndex];
     leftIndex++;
+    indexToFill++;
   }
-  while (rightIndex < rightArray.length) {
-    mergedArr.push(rightArray[rightIndex]);
+  while (rightIndex < rightArrayLength) {
+    arr[indexToFill] = rightArray[rightIndex];
     rightIndex++;
+    indexToFill++;
   }
-  return mergedArr;
 }
 
-function mergeSort(arr) {
-  if (arr.length < 2) {
-    return arr;
+function mergeSort(arr, left = 0, right = arr.length - 1) {
+  if (left >= right) {
+    return;
   }
-  const middle = Math.ceil(arr.length / 2);
-  const leftArray = arr.slice(0, middle);
-  const rightArray = arr.slice(middle);
-
-  return mergeArrays(mergeSort(leftArray), mergeSort(rightArray));
+  const middle = Math.floor((left + right) / 2);
+  mergeSort(arr, left, middle);
+  mergeSort(arr, middle + 1, right);
+  mergeArrays(arr, left, middle, right);
 }
 
-console.log(mergeSort([38, 27, 43, 3, 9, 82, 10]));
-// https://en.wikipedia.org/wiki/File:Merge_sort_algorithm_diagram.svg
+const arr = [38, 27, 43, 3, 9, 82, 10];
+mergeSort(arr);
+console.log(arr);

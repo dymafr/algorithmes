@@ -1,6 +1,3 @@
-// Pour n on a :
-// k n complexité en temps où k est le nombre max de chiffres.
-
 function getDigit(num, i) {
   return Math.floor(num / Math.pow(10, i)) % 10;
 }

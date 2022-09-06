@@ -1,3 +1,4 @@
+// Version de référence
 function countingSort(arr, n = arr.length, max = Math.max(...arr)) {
   const result = [];
   const counts = [];

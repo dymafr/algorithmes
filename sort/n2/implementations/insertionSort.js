@@ -1,6 +1,4 @@
-import arrayGenerator from '../../arrayGenerator.js';
-
-function insertionSort(tableau) {
+export function insertionSort(tableau) {
   const n = tableau.length;
 
   for (let i = 1; i < n; i++) {
@@ -14,6 +12,3 @@ function insertionSort(tableau) {
   }
   return tableau;
 }
-
-const tableauTrié = insertionSort(arrayGenerator(20, 200));
-console.log(tableauTrié);

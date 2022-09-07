@@ -9,7 +9,7 @@ export class Node {
 export class LinkedList {
   constructor() {
     this.head = null;
-    this.size = null;
+    this.size = 0;
   }
   /**
    * Ajout d'un élément à la fin de la liste.
@@ -143,6 +143,14 @@ export class LinkedList {
       this.size--;
       return nodeValue;
     }
+  }
+
+  /**
+   * Vide la liste.
+   */
+  clear() {
+    this.head = null;
+    this.size = 0;
   }
 
   /**

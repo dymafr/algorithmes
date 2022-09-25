@@ -35,4 +35,3 @@ function mergeSort(arr) {
 }
 
 console.log(mergeSort([38, 27, 43, 3, 9, 82, 10]));
-// https://en.wikipedia.org/wiki/File:Merge_sort_algorithm_diagram.svg

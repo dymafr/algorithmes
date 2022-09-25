@@ -6,8 +6,8 @@ function mergeArrays(arr, left, middle, right) {
   for (let i = 0; i < leftArrayLength; i++) {
     leftArray[i] = arr[left + i];
   }
-  for (let j = 0; j < rightArrayLength; j++) {
-    rightArray[j] = arr[middle + j + 1];
+  for (let i = 0; i < rightArrayLength; i++) {
+    rightArray[i] = arr[middle + i + 1];
   }
   let leftIndex = 0;
   let rightIndex = 0;

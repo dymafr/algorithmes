@@ -42,9 +42,9 @@ function mergeSort(arr, left = 0, right = arr.length - 1) {
   const middle = Math.floor((left + right) / 2);
   mergeSort(arr, left, middle);
   mergeSort(arr, middle + 1, right);
-  mergeArrays(arr, left, middle, right);
+  return mergeArrays(arr, left, middle, right);
 }
 
 const arr = [38, 27, 43, 3, 9, 82, 10];
-mergeSort(arr);
+mergeSort([38, 27, 43, 3, 9, 82, 10]);
 console.log(arr);

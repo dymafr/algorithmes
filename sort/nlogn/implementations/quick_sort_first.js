@@ -27,6 +27,6 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
   }
 }
 
-const arr = [2, 8, 7, 1, 3, 5, 6, 4];
+const arr = [5, 1, 3, 8, 7, 4, 6, 2];
 quickSort(arr);
 console.log(arr);

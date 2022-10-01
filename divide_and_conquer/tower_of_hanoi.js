@@ -1,15 +1,23 @@
-// 2^n - 1 déplacements (O(2^n))
-// Mémoire O(n)
+const a = [];
+const b = [];
+const c = [];
 
-function towerOfHanoi(n, source, destination, auxilliaire) {
-  if (n === 1) {
-    console.log(`Déplacer le disque ${n} de ${source} vers ${destination}`);
-  } else {
-    towerOfHanoi(n - 1, source, auxilliaire, destination);
-    console.log(`Déplacer le disque ${n} de ${source} vers ${destination}`);
-    towerOfHanoi(n - 1, auxilliaire, destination, source);
+function initHanoi(n) {
+  while (n > 0) {
+    a.push(n);
+    n--;
+  }
+}
+
+function solveHanoi(n, source, auxilliaire, destination) {
+  if (n > 0) {
+    solveHanoi(n - 1, source, destination, auxilliaire);
+    destination.push(source.pop());
+    console.log(a, b, c);
+    solveHanoi(n - 1, auxilliaire, source, destination);
   }
 }
 
 const n = 3; // Nombre de disques
-towerOfHanoi(n, 'A', 'C', 'B');
+initHanoi(n);
+solveHanoi(n, a, b, c);

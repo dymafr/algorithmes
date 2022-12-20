@@ -9,6 +9,10 @@ function get_max(arr) {
 }
 
 function countingSort(arr) {
+  if (arr.length < 2) {
+    return arr;
+  }
+
   // Nous récupérons la plus grande valeur du tableau :
   const max = get_max(arr);
 

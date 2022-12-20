@@ -1,36 +1,52 @@
-// Version de référence
-function countingSort(arr, n, place) {
-  const base = 10; // car base 10 - cela pourrait être base 26 pour tri chars
-  const result = [];
+function get_max(arr) {
+  let max = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+  return max;
+}
+
+function countingSort(arr, base, position) {
+  const sortedArray = [];
   const counts = [];
 
+  // Nous allons initialiser le tableau de comptage avec des 0 :
   for (let i = 0; i < base; i++) {
     counts[i] = 0;
   }
 
-  for (let i = 0; i < n; i++) {
-    const num = Math.floor(arr[i] / place) % 10; // Récupérer le bon chiffre
+  // Nous allons compter le nombre d'occurences de chaque élément
+  // en fonction de la position :
+  for (let i = 0; i < arr.length; i++) {
+    const num = Math.floor(arr[i] / position) % base;
     counts[num]++;
   }
 
+  // Nous allons calculer la position de chaque élément dans le tableau trié :
   for (let i = 1; i < base; i++) {
     counts[i] += counts[i - 1];
   }
 
-  for (let i = n - 1; i >= 0; i--) {
-    const num = Math.floor(arr[i] / place) % 10;
-    result[counts[num] - 1] = arr[i];
+  // Nous allons placer chaque élément dans le tableau de sortie :
+  for (let i = arr.length - 1; i >= 0; i--) {
+    const num = Math.floor(arr[i] / position) % base;
+    sortedArray[counts[num] - 1] = arr[i];
     counts[num]--;
   }
 
-  return result;
+  return sortedArray;
 }
 
-function radixSort(arr, n = arr.length) {
-  const max = Math.max(...arr);
+function radixSort(arr, base = 10) {
+  if (arr.length < 2) {
+    return arr;
+  }
+  const max = get_max(arr);
 
-  for (let i = 1; parseInt(max / i) > 0; i *= 10) {
-    arr = countingSort(arr, n, i);
+  for (let i = 1; max / i > 0; i *= base) {
+    arr = countingSort(arr, base, i);
   }
   return arr;
 }

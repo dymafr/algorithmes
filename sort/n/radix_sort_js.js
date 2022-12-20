@@ -26,4 +26,4 @@ function radixSort(nums) {
   return nums;
 }
 
-console.log(radixSort([23, 345, 5467, 12]));
+console.log(radixSort([23, 345, 5467, 12, 1]));

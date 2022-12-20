@@ -4,8 +4,8 @@ function countingSort(arr, n = arr.length) {
   const counts = {};
 
   for (let i = 0; i < n; i++) {
-    counts[arr[i]] ??= 0;
-    counts[arr[i]]++;
+    counts[arr[i]] ??= 0; // Initialisation à 0 uniquement si null ou undefined
+    counts[arr[i]]++; // Incrémentation
   }
 
   const sortedArr = [];
@@ -18,5 +18,5 @@ function countingSort(arr, n = arr.length) {
   return sortedArr;
 }
 
-const arr = [100, 2, 1, 11, 23, 4, 12, 5, 54, 1, 32];
+const arr = [7, 5, 2, 4, 3, 9, 3, 2, 1, 5, 6, 7, 9, 4, 1, 2, 3, 4, 5, 6, 7, 9];
 console.log(countingSort(arr));

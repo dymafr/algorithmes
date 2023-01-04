@@ -56,7 +56,7 @@ function bucketSortInterval(arr, min, max) {
     while (min + h * (k + 1) < arr[i]) {
       k++;
     }
-    // On peut aussi faire :
+    // On peut aussi faire uniquement avec des entiers :
     // const k = Math.floor((arr[i] - min) / h);
     buckets[k].push(arr[i]);
   }

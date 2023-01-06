@@ -1,4 +1,5 @@
 import { Stack } from './Stack.js';
+import { StackDynamicArray } from './StackDynamicArray.js';
 import { StackArray } from './StackArray.js';
 
 describe('##Suite de tests pour les piles', () => {
@@ -18,9 +19,10 @@ describe('##Suite de tests pour les piles', () => {
     stack.push(1);
     expect(stack.getSize()).toBe(1);
     stack.push(2);
+    stack.push(3);
 
     expect(stack.isEmpty()).toBe(false);
-    expect(stack.getSize()).toBe(2);
+    expect(stack.getSize()).toBe(3);
   });
 
   it('le pop fonctionne', () => {

@@ -1,10 +1,12 @@
 import { Queue } from './Queue.js';
+import { QueueArray } from './QueueArray.js';
 
 describe('##Suite de tests pour les piles', () => {
   let queue;
 
   beforeEach(() => {
-    queue = new Queue();
+    // queue = new Queue();
+    queue = new QueueArray();
   });
 
   it('une pile vide a une taille de 0 et est vide', () => {

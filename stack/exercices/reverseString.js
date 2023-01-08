@@ -1,7 +1,10 @@
-import { Stack } from '../StackLL.js';
+import { StackLL } from '../StackLL.js';
 
 export default function reverseString(str) {
-  const stack = new Stack();
+  const stack = new StackLL();
+  if (str.length < 2) {
+    return str;
+  }
   for (let i = 0; i < str.length; i++) {
     stack.push(str[i]);
   }

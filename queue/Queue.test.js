@@ -5,7 +5,7 @@ describe('##Suite de tests pour les piles', () => {
   let queue;
 
   beforeEach(() => {
-    // queue = new Queue();
+    // queue = new QueueLL();
     queue = new QueueArray();
   });
 

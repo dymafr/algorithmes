@@ -1,4 +1,3 @@
-import { Stack } from '../StackLL.js';
 import reverseString from './reverseString.js';
 
 const characters =
@@ -16,13 +15,8 @@ function generateRandomString() {
 }
 
 describe('##Inverser une chaîne de caractères', () => {
-  let stack;
   let string;
   let reversedString;
-
-  beforeEach(() => {
-    stack = new Stack();
-  });
 
   beforeEach(() => {
     string = generateRandomString();

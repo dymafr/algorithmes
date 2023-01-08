@@ -1,4 +1,4 @@
-import { Stack } from './Stack.js';
+import { StackLL } from './StackLL.js';
 import { StackDynamicArray } from './StackDynamicArray.js';
 import { StackArray } from './StackArray.js';
 

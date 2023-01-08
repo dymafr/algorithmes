@@ -1,3 +1,5 @@
+// Implémenter une queue avec une liste chainée
+// Attention liste chaînée différente de la liste chaînée que nous avions implémentée
 export class Node {
   constructor(value, next = null) {
     this.value = value;
@@ -58,3 +60,9 @@ export class Queue {
     return this.size;
   }
 }
+
+const queue = new Queue();
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+console.log(queue);

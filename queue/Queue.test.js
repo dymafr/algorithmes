@@ -1,4 +1,4 @@
-import { Queue } from './Queue.js';
+import { QueueLL } from './QueueLL.js';
 import { QueueArray } from './QueueArray.js';
 
 describe('##Suite de tests pour les piles', () => {

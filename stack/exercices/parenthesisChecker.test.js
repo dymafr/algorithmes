@@ -104,3 +104,36 @@ describe('##Avec trois parenthèses ouvrantes et fermantes mal imbriquées', () 
     expect(parenthesisChecker('[[{]}]')).toBe(false);
   });
 });
+
+describe("##Avec d'autres caractères cela fonctionne", () => {
+  test('avec un mot retourne true', () => {
+    expect(parenthesisChecker('bonjour')).toBe(true);
+  });
+  test('avec un mot et des parenthèses imbriquées retourne true', () => {
+    expect(parenthesisChecker('bonjour (ça va ?)')).toBe(true);
+  });
+  test('avec un mot et des parenthèses mal imbriquées retourne false', () => {
+    expect(parenthesisChecker('bonjour (ça va ?')).toBe(false);
+  });
+  test('avec un mot et des parenthèses imbriquées et des caractères spéciaux retourne true', () => {
+    expect(parenthesisChecker('bonjour (ça va ?) !')).toBe(true);
+  });
+  test('avec un mot et des parenthèses mal imbriquées et des caractères spéciaux retourne false', () => {
+    expect(parenthesisChecker('bonjour (ça va ? !')).toBe(false);
+  });
+  test('avec un mot et des parenthèses imbriquées et des caractères spéciaux et des chiffres retourne true', () => {
+    expect(parenthesisChecker('bonjour (ça va ?) ! 123')).toBe(true);
+  });
+  test('avec un mot et des parenthèses mal imbriquées et des caractères spéciaux et des chiffres retourne false', () => {
+    expect(parenthesisChecker('bonjour (ça va ? ! 123')).toBe(false);
+  });
+  test('avec un mot et des parenthèses imbriquées et des caractères spéciaux et des chiffres et des espaces retourne true', () => {
+    expect(parenthesisChecker('bonjour (ça va ?) ! 123 ')).toBe(true);
+  });
+  test('avec un mot et plusieurs parenthèses mal imbriquées et des caractères spéciaux et des chiffres et des espaces retourne false', () => {
+    expect(parenthesisChecker('bonjour ({ça va ? !} 123 ')).toBe(false);
+  });
+  test('avec un mot et plusieurs parenthèses imbriquées et des caractères spéciaux et des chiffres et des espaces retourne true', () => {
+    expect(parenthesisChecker('bonjour ({ça va ? !} 123 )')).toBe(true);
+  });
+});

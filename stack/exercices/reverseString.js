@@ -14,3 +14,7 @@ export default function reverseString(str) {
   }
   return result;
 }
+
+function isPalindrome(str) {
+  return str === reverseString(str);
+}

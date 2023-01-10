@@ -1,47 +1,47 @@
 export class StackArray {
   // Tableau de taille fixe
-  constructor() {
-    this.i = -1; // Pointeur de pile
-    this.MAX = 100; // Taille maximale du tableau
-    this.array = Array(this.MAX).fill(0); // Simule tableau statique
+  constructor(size) {
+    this.top = -1; // Pointeur de pile
+    this.MAX = size; // Taille maximale du tableau
+    this.array = Array(size); // Simule tableau statique
   }
 
   push(value) {
-    if (this.i >= this.MAX - 1) {
+    if (this.top >= this.MAX - 1) {
       throw new Error('Stack overflow'); // Dépassement de pile
     } else {
-      this.i++;
-      this.array[this.i] = value;
+      this.top++;
+      this.array[this.top] = value;
     }
   }
 
   pop() {
-    if (this.i < 0) {
+    if (this.top === -1) {
       return null;
     } else {
-      const x = this.array[this.i];
-      this.i--;
-      return x;
+      const value = this.array[this.top];
+      this.top--;
+      return value;
     }
   }
 
   peek() {
-    if (this.i < 0 || this.i > this.MAX) {
+    if (this.top === -1) {
       return null;
     } else {
-      return this.array[this.i];
+      return this.array[this.top];
     }
   }
 
   getSize() {
-    return this.i + 1;
+    return this.top + 1;
   }
 
   isEmpty() {
-    return this.i < 0;
+    return this.top === -1;
   }
 
   clear() {
-    this.i = -1;
+    this.top = -1;
   }
 }

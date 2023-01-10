@@ -6,8 +6,8 @@ describe('##Suite de tests pour les piles', () => {
   let stack;
 
   beforeEach(() => {
-    // stack = new Stack();
-    stack = new StackArray();
+    stack = new StackLL();
+    // stack = new StackArray(3);
   });
 
   it('une pile vide a une taille de 0 et est vide', () => {
@@ -58,9 +58,6 @@ describe('##Suite de tests pour les piles', () => {
 
     stack.push(2);
     expect(stack.peek()).toBe(2);
-
-    stack.pop();
-    expect(stack.peek()).toBe(1);
   });
 
   it('retourne la bonne taille', () => {

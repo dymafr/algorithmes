@@ -1,29 +1,41 @@
 export class StackDynamicArray {
   constructor() {
-    this.list = [];
+    this.array = new Array();
+    this.top = -1;
   }
 
   push(value) {
-    this.list.push(value);
+    this.top++;
+    this.array[this.top] = value;
   }
 
   pop() {
-    return this.list.pop() ?? null;
+    if (this.top === -1) {
+      return null;
+    } else {
+      const value = this.array[this.top];
+      this.top--;
+      return value;
+    }
   }
 
   peek() {
-    return this.list.at(-1) ?? null;
+    if (this.top === -1) {
+      return null;
+    } else {
+      return this.array[this.top];
+    }
   }
 
   getSize() {
-    return this.list.length;
+    return this.top + 1;
   }
 
   isEmpty() {
-    return this.list.length === 0;
+    return this.top === -1;
   }
 
   clear() {
-    this.list = [];
+    this.top = -1;
   }
 }

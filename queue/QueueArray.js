@@ -40,7 +40,7 @@ export class QueueArray {
   }
 
   isEmpty() {
-    return this.head === this.tail && this.array[this.head] === null;
+    return this.array[this.head] === null;
   }
 
   clear() {

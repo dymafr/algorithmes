@@ -116,6 +116,15 @@ describe('##Suite de tests pour les piles', () => {
 
     queue.clear();
     expect(queue.isEmpty()).toBe(true);
+
+    queue.enqueue(1);
+    expect(queue.isEmpty()).toBe(false);
+    queue.enqueue(1);
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
+    expect(queue.isEmpty()).toBe(true);
   });
 
   it('vider la queue fonctionne', () => {

@@ -1,10 +1,10 @@
 export class QueueArray {
   // Tableau de taille fixe
-  constructor() {
+  constructor(size) {
     this.head = 0;
     this.tail = 0;
-    this.MAX = 10; // Taille maximale du tableau
-    this.array = Array(this.MAX).fill(null); // Simule tableau statique
+    this.MAX = size; // Taille maximale du tableau
+    this.array = Array(size).fill(null); // Simule tableau statique
   }
 
   enqueue(value) {
@@ -40,7 +40,7 @@ export class QueueArray {
   }
 
   isEmpty() {
-    return this.head === this.tail && this.array[0] === null;
+    return this.head === this.tail && this.array[this.head] === null;
   }
 
   clear() {

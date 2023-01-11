@@ -6,7 +6,7 @@ describe('##Suite de tests pour les piles', () => {
 
   beforeEach(() => {
     // queue = new QueueLL();
-    queue = new QueueArray();
+    queue = new QueueArray(4);
   });
 
   it('une pile vide a une taille de 0 et est vide', () => {
@@ -84,6 +84,28 @@ describe('##Suite de tests pour les piles', () => {
 
     queue.dequeue();
     expect(queue.getSize()).toBe(0);
+
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.dequeue();
+    queue.enqueue(5);
+    expect(queue.getSize()).toBe(4);
+
+    queue.dequeue();
+    queue.dequeue();
+    queue.dequeue();
+    queue.dequeue();
+    expect(queue.getSize()).toBe(0);
+
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.dequeue();
+    queue.dequeue();
+    expect(queue.getSize()).toBe(2);
   });
 
   it('isEmpty fonctionne', () => {

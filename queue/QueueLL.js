@@ -18,25 +18,25 @@ export class QueueLL {
     const node = new Node(value);
     if (!this.head) {
       this.head = node;
+      this.tail = node;
     } else {
       this.tail.next = node;
+      this.tail = this.tail.next;
     }
-    this.tail = node;
     this.size++;
   }
 
   dequeue() {
-    let current = this.head;
-    if (!current) {
+    if (this.isEmpty()) {
       return null;
-    } else {
-      this.head = current.next;
-      this.size--;
-      if (this.size === 0) {
-        this.tail = null;
-      }
-      return current.value;
     }
+    const node = this.head;
+    this.head = this.head.next;
+    this.size--;
+    if (this.size === 0) {
+      this.tail = null;
+    }
+    return node.value;
   }
 
   peek() {
@@ -44,6 +44,10 @@ export class QueueLL {
       return null;
     }
     return this.head.value;
+  }
+
+  getSize() {
+    return this.size;
   }
 
   isEmpty() {
@@ -54,9 +58,5 @@ export class QueueLL {
     this.head = null;
     this.tail = null;
     this.size = 0;
-  }
-
-  getSize() {
-    return this.size;
   }
 }

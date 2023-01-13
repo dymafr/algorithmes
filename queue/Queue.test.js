@@ -59,6 +59,9 @@ describe('##Suite de tests pour les piles', () => {
 
     queue.dequeue();
     expect(queue.peek()).toBe(2);
+
+    queue.dequeue();
+    expect(queue.peek()).toBe(null);
   });
 
   it('retourne la bonne taille', () => {
@@ -120,6 +123,23 @@ describe('##Suite de tests pour les piles', () => {
     queue.enqueue(1);
     expect(queue.isEmpty()).toBe(false);
     queue.enqueue(1);
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
+    expect(queue.isEmpty()).toBe(true);
+
+    queue.enqueue(1);
+    expect(queue.isEmpty()).toBe(false);
+    queue.enqueue(2);
+    expect(queue.isEmpty()).toBe(false);
+    queue.enqueue(3);
+    expect(queue.isEmpty()).toBe(false);
+    queue.enqueue(4);
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
+    expect(queue.isEmpty()).toBe(false);
+    queue.dequeue();
     expect(queue.isEmpty()).toBe(false);
     queue.dequeue();
     expect(queue.isEmpty()).toBe(false);

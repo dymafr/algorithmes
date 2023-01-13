@@ -32,11 +32,7 @@ export class QueueArray {
   }
 
   peek() {
-    if (this.isEmpty()) {
-      return null; // File vide
-    } else {
-      return this.array[this.head];
-    }
+    return this.array[this.head];
   }
 
   isEmpty() {

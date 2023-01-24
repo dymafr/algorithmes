@@ -18,6 +18,9 @@ export default class HashTableLinearProbing {
 
   set(key, value) {
     const position = this.hash(key);
+    if (this.size === this.table.length) {
+      throw new Error('Table pleine');
+    }
     if (this.table[position] === undefined) {
       this.table[position] = { key, value };
     } else {
@@ -26,11 +29,17 @@ export default class HashTableLinearProbing {
         return;
       }
       let index = position + 1;
+      if (index === this.table.length) {
+        index = 0;
+      }
       while (
         this.table[index] !== undefined &&
         this.table[index]?.key !== key
       ) {
         index++;
+        if (index === this.table.length) {
+          index = 0;
+        }
       }
       if (this.table[index]?.key === key) {
         this.table[index].value = value;

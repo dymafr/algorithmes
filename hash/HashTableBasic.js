@@ -23,15 +23,15 @@ export default class HashTableBasic {
   // Hachage statique, méthode par multiplication : h(k) = floor(m(kA mod 1))
   hashMultiplication(key) {
     const A = 0.8018543616126939; // 0 < A < 1
+    let total = 0;
     if (typeof key === 'string') {
-      let hash = 0;
       for (let i = 0; i < key.length; i++) {
-        hash += key.charCodeAt(i);
+        total += key.charCodeAt(i);
       }
-      return Math.floor(this.table.length * ((hash * A) % 1));
     } else if (typeof key === 'number') {
-      return Math.floor(this.table.length * ((key * A) % 1));
+      total = key;
     }
+    return Math.floor(this.table.length * ((total * A) % 1));
   }
 
   set(key, value = null) {

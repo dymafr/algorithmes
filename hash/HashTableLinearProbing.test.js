@@ -169,24 +169,16 @@ describe('##Suite de tests HashTable', () => {
     expect(table.size).toBe(2);
   });
 
-  test('Cette table doit pouvoir gérer les suppressions paresseuses', () => {
-    const table = new HashTable();
-    table.set('ad', 42);
-    table.set(197, 21);
-    table.delete('ad');
-    table.get(197);
-    expect(table.table[3].value).toBe(21);
-  });
-
-  test('Cette table doit pouvoir gérer les suppressions paresseuses', () => {
+  test('Cette table doit pouvoir gérer une suppression paresseuse lorsque plusieurs probing', () => {
     const table = new HashTable();
     table.set('ad', 42);
     table.set(197, 21);
     table.set('Å', 12);
     table.delete('ad');
     table.delete(197);
-    table.get('Å');
-    expect(table.table[3].value).toBe(12);
+    expect(table.get('Å')).toBe(12);
+    table.set('Å', 22);
+    expect(table.get('Å')).toBe(22);
   });
 
   test("Cette table doit pouvoir gérer le retour à l'index 0 et les suppressions paresseuses", () => {

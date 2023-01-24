@@ -66,18 +66,6 @@ export default class HashTableLinearProbing {
           index++;
         }
         if (this.table[index]?.key === key) {
-          // On cherche une suppression paresseuse
-          for (let i = position; i < index; i++) {
-            if (this.table[i] === null) {
-              toDelete = i;
-              break;
-            }
-          }
-          if (toDelete !== null) {
-            this.table[toDelete] = this.table[index];
-            delete this.table[index];
-            return this.table[toDelete].value;
-          }
           return this.table[index].value;
         }
       }

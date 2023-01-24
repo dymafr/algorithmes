@@ -54,22 +54,8 @@ export default class HashTableChaining {
       return null;
     }
     let list = this.table[index];
-    let node = list.head;
-    let previous = null;
-    while (node) {
-      if (node.value.key === key) {
-        if (node === list.head && node.next === null) {
-          this.table[index] = null;
-        } else if (node === list.head) {
-          list.head = node.next;
-        } else {
-          previous.next = node.next;
-        }
-        this.size--;
-      }
-      previous = node;
-      node = node.next;
-    }
+    list.removeElementByKey(key);
+    this.size--;
     return null;
   }
 

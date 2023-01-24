@@ -145,6 +145,26 @@ export class LinkedList {
     }
   }
 
+  removeElementByKey(key) {
+    let current = this.head;
+    if (!current) {
+      return null;
+    } else if (key === current.value.key) {
+      return this.removeFirst();
+    } else {
+      while (current.next) {
+        if (key === current.next.value.key) {
+          const nodeValue = current.next.value;
+          current.next = current.next.next;
+          this.size--;
+          return nodeValue;
+        }
+        current = current.next;
+      }
+      return null;
+    }
+  }
+
   /**
    * Vide la liste.
    */

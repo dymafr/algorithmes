@@ -35,7 +35,7 @@ export default class HashTableChaining {
   get(key) {
     const index = this.hash(key);
     if (!this.table[index]) {
-      return undefined;
+      return null;
     }
     const list = this.table[index];
     let node = list.head;
@@ -45,13 +45,13 @@ export default class HashTableChaining {
       }
       node = node.next;
     }
-    return undefined;
+    return null;
   }
 
   delete(key) {
     const index = this.hash(key);
     if (!this.table[index]) {
-      return undefined;
+      return null;
     }
     let list = this.table[index];
     let node = list.head;
@@ -70,7 +70,7 @@ export default class HashTableChaining {
       previous = node;
       node = node.next;
     }
-    return undefined;
+    return null;
   }
 
   isEmpty() {

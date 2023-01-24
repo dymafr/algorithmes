@@ -64,6 +64,7 @@ describe('##Suite de tests HashTable', () => {
   test('Une table doit pouvoir supprimer un élément', () => {
     const table = new HashTable();
     table.set('test', 42);
+    expect(table.size).toBe(1);
     table.delete('test');
     expect(table.isEmpty()).toBe(true);
     expect(table.size).toBe(0);
@@ -72,9 +73,25 @@ describe('##Suite de tests HashTable', () => {
   test('Une table doit pouvoir supprimer plusieurs éléments', () => {
     const table = new HashTable();
     table.set('test', 42);
+    expect(table.size).toBe(1);
     table.set('test2', 21);
+    expect(table.size).toBe(2);
     table.delete('test');
+    expect(table.size).toBe(1);
     table.delete('test2');
+    expect(table.isEmpty()).toBe(true);
+    expect(table.size).toBe(0);
+  });
+
+  test('Une table doit pouvoir supprimer plusieurs éléments y compris chainés', () => {
+    const table = new HashTable();
+    table.set('ad', 42);
+    expect(table.size).toBe(1);
+    table.set(197, 21);
+    expect(table.size).toBe(2);
+    table.delete('ad');
+    expect(table.size).toBe(1);
+    table.delete(197);
     expect(table.isEmpty()).toBe(true);
     expect(table.size).toBe(0);
   });

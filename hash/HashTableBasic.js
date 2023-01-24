@@ -34,14 +34,16 @@ export default class HashTableBasic {
     }
   }
 
-  set(key, value) {
+  set(key, value = null) {
     const index = this.hash(key);
-    if (this.table[index] === undefined) {
-      this.size++;
-    } else {
+    if (this.table[index]) {
       console.log('Collision !');
+    } else {
+      this.size++;
     }
-    this.table[index] = value;
+    // Si pas de valeur on considère que la clé est
+    // à la fois la valeur et la clé : 197 => 197 / 'ad' => 'ad'
+    this.table[index] = value ?? key;
   }
 
   get(key) {
@@ -51,8 +53,12 @@ export default class HashTableBasic {
 
   delete(key) {
     const index = this.hash(key);
-    this.table[index] = undefined;
-    this.size--;
+    const deleted = this.table[index];
+    if (deleted) {
+      this.size--;
+      this.table[index] = null;
+    }
+    return deleted;
   }
 
   isEmpty() {

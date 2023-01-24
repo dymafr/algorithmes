@@ -86,7 +86,7 @@ describe('##Suite de tests HashTable', () => {
     table.set('test2', 21);
     table.delete('test');
     expect(table.get('test2')).toBe(21);
-    expect(table.get('test')).toBe(undefined);
+    expect(table.get('test')).toBe(null);
   });
 
   test('Cette table ne doit pas gérer les collisions et doit remplacer la valeur', () => {

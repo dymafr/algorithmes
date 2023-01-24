@@ -188,4 +188,30 @@ describe('##Suite de tests HashTable', () => {
     table.get('Å');
     expect(table.table[3].value).toBe(12);
   });
+
+  test("Cette table doit pouvoir gérer le retour à l'index 0 et les suppressions paresseuses", () => {
+    const table = new HashTable();
+    for (let i = 10; i < 97; i++) {
+      table.set(i, i);
+    }
+    table.set('a', 42);
+    table.set('b', 42);
+    table.set('c', 42);
+    expect(table.get('a')).toBe(42);
+    expect(table.get('b')).toBe(42);
+    expect(table.get('c')).toBe(42);
+    expect(table.size).toBe(90);
+    table.delete('a');
+    table.delete('b');
+    table.set('a', 42);
+    expect(table.get('a')).toBe(42);
+  });
+
+  test('Cette table doit envoyer une erreur quand elle est pleine', () => {
+    const table = new HashTable();
+    for (let i = 0; i < 97; i++) {
+      table.set(i, i);
+    }
+    expect(() => table.set(98, 98)).toThrow();
+  });
 });

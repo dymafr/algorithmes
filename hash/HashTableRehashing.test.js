@@ -220,4 +220,19 @@ describe('##Suite de tests HashTable', () => {
     expect(table.get('Å')).toBe(12);
     expect(table.table.length).toBe(23);
   });
+
+  test('Cette table doit gérer le rehachage et enlever les tombes', () => {
+    const table = new HashTable();
+    table.set('ad', 42);
+    table.set(197, 21);
+    table.set('Å', 12);
+    table.delete('ad');
+    table.delete(197);
+    table.delete('Å');
+    for (let i = 0; i < 9; i++) {
+      table.set(i, i);
+    }
+    expect(table.table.length).toBe(23);
+    expect(table.table.includes(null)).toBe(false);
+  });
 });

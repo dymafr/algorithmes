@@ -27,7 +27,7 @@ export default class HashTableRehashing {
     this.table = new Array(this.nextPrimeNumber());
     this.size = 0;
     for (let i = 0; i < oldTable.length; i++) {
-      if (oldTable[i] !== undefined) {
+      if (oldTable[i]) {
         this.set(oldTable[i].key, oldTable[i].value);
       }
     }
@@ -77,7 +77,8 @@ export default class HashTableRehashing {
     }
     this.size++;
     // Rehachage
-    const loadFactor = this.size / this.table.length;
+    const loadFactor =
+      this.table.filter((e) => e !== undefined).length / this.table.length;
     if (loadFactor > 0.75) {
       this.rehash();
     }

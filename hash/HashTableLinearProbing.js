@@ -54,16 +54,24 @@ export default class HashTableLinearProbing {
   get(key) {
     const position = this.hash(key);
     if (this.table[position] !== undefined) {
-      let toDelete = null;
       if (this.table[position]?.key === key) {
         return this.table[position].value;
       } else {
+        if (this.table[position]?.key === key) {
+          return this.table[index].value;
+        }
         let index = position + 1;
+        if (index === this.table.length) {
+          index = 0;
+        }
         while (
           this.table[index] !== undefined &&
           this.table[index]?.key !== key
         ) {
           index++;
+          if (index === this.table.length) {
+            index = 0;
+          }
         }
         if (this.table[index]?.key === key) {
           return this.table[index].value;
@@ -80,11 +88,17 @@ export default class HashTableLinearProbing {
         this.size--;
       } else {
         let index = position + 1;
+        if (index === this.table.length) {
+          index = 0;
+        }
         while (
           this.table[index] !== undefined &&
           this.table[index]?.key !== key
         ) {
           index++;
+          if (index === this.table.length) {
+            index = 0;
+          }
         }
         if (this.table[index]?.key === key) {
           this.table[index] = null;

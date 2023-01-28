@@ -67,6 +67,7 @@ export default class HashTableLinearProbing {
     let i = 0;
     while (i < this.table.length) {
       if (this.table[position]?.key === key) {
+        // On met une tombe à la place de l'élément à supprimer :
         this.table[position] = null;
         this.size--;
         return;

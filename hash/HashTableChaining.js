@@ -1,4 +1,4 @@
-import { LinkedList } from '../linked_list/LinkedList.js';
+import { LinkedListHash } from '../linked_list/LinkedListHashTable.js';
 
 export default class HashTableChaining {
   constructor() {
@@ -18,45 +18,41 @@ export default class HashTableChaining {
     }
   }
 
-  set(key, value) {
+  set(key, value = null) {
     const index = this.hash(key);
-    // Si la clé existe déjà, on la supprime pour la remplacer
-    // on pourrait faire une version plus complexe pour mettre à jour la valeur
-    if (this.get(key)) {
-      this.delete(key);
+    const list = this.table[index];
+    if (!list) {
+      this.table[index] = new LinkedListHash();
+      this.table[index].add(key, value);
+      this.size++;
+    } else {
+      if (!list.update(key, value)) {
+        list.add(key, value);
+        this.size++;
+      }
     }
-    if (!this.table[index]) {
-      this.table[index] = new LinkedList();
-    }
-    this.table[index].addLast({ key, value });
-    this.size++;
   }
 
   get(key) {
     const index = this.hash(key);
-    if (!this.table[index]) {
+    const list = this.table[index];
+    if (!list) {
       return null;
     }
-    const list = this.table[index];
-    let node = list.head;
-    while (node) {
-      if (node.value.key === key) {
-        return node.value.value;
-      }
-      node = node.next;
-    }
-    return null;
+    return list.get(key);
   }
 
   delete(key) {
     const index = this.hash(key);
-    if (!this.table[index]) {
+    const list = this.table[index];
+    if (!list) {
       return null;
     }
-    let list = this.table[index];
-    list.removeElementByKey(key);
-    this.size--;
-    return null;
+    const value = list.delete(key);
+    if (value) {
+      this.size--;
+    }
+    return value;
   }
 
   isEmpty() {

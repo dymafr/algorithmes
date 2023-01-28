@@ -62,6 +62,15 @@ describe('##Suite de tests HashTable', () => {
     expect(table.get('test2')).toBe(21);
   });
 
+  test('Une table pleine ne doit pas créer une boucle infinie quand on tente de récupérer un élément', () => {
+    const table = new HashTable();
+    table.set('ad', 42);
+    for (let i = 0; i < 96; i++) {
+      table.set(i, i);
+    }
+    expect(table.get(100)).toBe(null);
+  });
+
   test('Une table doit pouvoir supprimer un élément', () => {
     const table = new HashTable();
     table.set('test', 42);
@@ -86,7 +95,7 @@ describe('##Suite de tests HashTable', () => {
     table.set('test2', 21);
     table.delete('test');
     expect(table.get('test2')).toBe(21);
-    expect(table.get('test')).toBe(undefined);
+    expect(table.get('test')).toBe(null);
   });
 
   test('Une table doit pouvoir supprimer plusieurs éléments', () => {
@@ -125,8 +134,8 @@ describe('##Suite de tests HashTable', () => {
     table.set(197, 21);
     table.delete('ad');
     table.delete(197);
-    expect(table.get('ad')).toBe(undefined);
-    expect(table.get(197)).toBe(undefined);
+    expect(table.get('ad')).toBe(null);
+    expect(table.get(197)).toBe(null);
     expect(table.size).toBe(0);
   });
 
@@ -138,9 +147,9 @@ describe('##Suite de tests HashTable', () => {
     table.delete('ad');
     table.delete(197);
     table.delete('Å');
-    expect(table.get('ad')).toBe(undefined);
-    expect(table.get(197)).toBe(undefined);
-    expect(table.get('Å')).toBe(undefined);
+    expect(table.get('ad')).toBe(null);
+    expect(table.get(197)).toBe(null);
+    expect(table.get('Å')).toBe(null);
     expect(table.size).toBe(0);
   });
 
@@ -153,19 +162,19 @@ describe('##Suite de tests HashTable', () => {
     table.set('Å', 12);
     expect(table.get('Å')).toBe(12);
     table.delete('ad');
-    expect(table.get('ad')).toBe(undefined);
+    expect(table.get('ad')).toBe(null);
     table.set('ad', 42);
     expect(table.get('ad')).toBe(42);
     table.delete(197);
-    expect(table.get(197)).toBe(undefined);
+    expect(table.get(197)).toBe(null);
     table.set(197, 21);
     expect(table.get(197)).toBe(21);
     table.delete('Å');
-    expect(table.get('Å')).toBe(undefined);
+    expect(table.get('Å')).toBe(null);
     table.set('Å', 12);
     expect(table.get('Å')).toBe(12);
     table.delete('ad');
-    expect(table.get('ad')).toBe(undefined);
+    expect(table.get('ad')).toBe(null);
     expect(table.size).toBe(2);
   });
 

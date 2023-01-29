@@ -62,7 +62,7 @@ export default class HashTableRehashing {
       if (!this.table[position]) {
         this.table[position] = { key, value: value ?? key };
         this.size++;
-        if (this.size / this.table.length > this.MAX_LOADING_FACTOR) {
+        if (this.size / this.table.length > this.MAX_LOAD_FACTOR) {
           this.rehash();
         }
         return;

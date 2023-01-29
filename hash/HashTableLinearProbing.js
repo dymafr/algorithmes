@@ -72,6 +72,8 @@ export default class HashTableLinearProbing {
         this.table[position] = null;
         this.size--;
         return;
+      } else if (this.table[position] === undefined) {
+        return;
       }
       position = this.probe(position);
       i++;

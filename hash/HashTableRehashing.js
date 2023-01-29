@@ -7,7 +7,7 @@ export default class HashTableRehashing {
   constructor() {
     this.table = new Array(11);
     this.size = 0;
-    this.MAX_LOADING_FACTOR = 0.75;
+    this.MAX_LOAD_FACTOR = 0.75;
   }
 
   hash(key) {

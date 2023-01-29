@@ -1,12 +1,13 @@
 export default class HashTableRehashing {
   static primeNumbers = [
-    11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,
-    102877, 205759, 411527, 823117, 1646237, 3292489, 6584983, 13169977,
+    23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437, 102877,
+    205759, 411527, 823117, 1646237, 3292489, 6584983, 13169977,
   ];
 
   constructor() {
     this.table = new Array(11);
     this.size = 0;
+    this.MAX_LOADING_FACTOR = 0.75;
   }
 
   hash(key) {
@@ -24,7 +25,7 @@ export default class HashTableRehashing {
   // O(n)
   rehash() {
     const oldTable = this.table;
-    this.table = new Array(this.nextPrimeNumber());
+    this.table = new Array(this.getNextPrime());
     this.size = 0;
     for (let i = 0; i < oldTable.length; i++) {
       if (oldTable[i]) {
@@ -33,7 +34,7 @@ export default class HashTableRehashing {
     }
   }
 
-  nextPrimeNumber() {
+  getNextPrime() {
     const doubledLength = this.table.length * 2;
     for (let i = 0; i < HashTableRehashing.primeNumbers.length; i++) {
       if (HashTableRehashing.primeNumbers[i] > doubledLength) {
@@ -43,101 +44,71 @@ export default class HashTableRehashing {
     throw new Error('Table trop grande');
   }
 
-  set(key, value) {
-    const position = this.hash(key);
-    if (this.size === this.table.length) {
-      throw new Error('Table pleine');
-    }
-    if (this.table[position] === undefined) {
-      this.table[position] = { key, value };
+  probe(index) {
+    if (index === this.table.length - 1) {
+      return 0;
     } else {
-      if (this.table[position]?.key === key) {
+      return index + 1;
+    }
+  }
+
+  set(key, value = null) {
+    const index = this.hash(key);
+    let position = index;
+    let i = 0;
+    while (i < this.table.length) {
+      // Si la position est une tombe (null) ou n'est pas occupée (undefined)
+      // alors on peut ajouter l'élément :
+      if (!this.table[position]) {
+        this.table[position] = { key, value: value ?? key };
+        this.size++;
+        if (this.size / this.table.length > this.MAX_LOADING_FACTOR) {
+          this.rehash();
+        }
+        return;
+        // Si la position est occupée par l'élément à ajouter
+        // on met à jour la valeur :
+      } else if (this.table[position]?.key === key) {
         this.table[position].value = value;
         return;
       }
-      let index = position + 1;
-      if (index === this.table.length) {
-        index = 0;
-      }
-      while (
-        this.table[index] !== undefined &&
-        this.table[index]?.key !== key
-      ) {
-        index++;
-        if (index === this.table.length) {
-          index = 0;
-        }
-      }
-      if (this.table[index]?.key === key) {
-        this.table[index].value = value;
-        return;
-      } else {
-        this.table[index] = { key, value };
-      }
+      position = this.probe(position);
+      i++;
     }
-    this.size++;
-    // Rehachage
-    const loadFactor =
-      this.table.filter((e) => e !== undefined).length / this.table.length;
-    if (loadFactor > 0.75) {
-      this.rehash();
-    }
+    throw new Error('La table est pleine');
   }
 
   get(key) {
-    const position = this.hash(key);
-    if (this.table[position] !== undefined) {
+    const index = this.hash(key);
+    let position = index;
+    let i = 0;
+    while (i < this.table.length) {
       if (this.table[position]?.key === key) {
         return this.table[position].value;
-      } else {
-        if (this.table[position]?.key === key) {
-          return this.table[index].value;
-        }
-        let index = position + 1;
-        if (index === this.table.length) {
-          index = 0;
-        }
-        while (
-          this.table[index] !== undefined &&
-          this.table[index]?.key !== key
-        ) {
-          index++;
-          if (index === this.table.length) {
-            index = 0;
-          }
-        }
-        if (this.table[index]?.key === key) {
-          return this.table[index].value;
-        }
+      } else if (this.table[position] === undefined) {
+        return null;
       }
+      position = this.probe(position);
+      i++;
     }
+    return null;
   }
 
   delete(key) {
-    const position = this.hash(key);
-    if (this.table[position] !== undefined) {
-      if (this.table[position] && this.table[position].key === key) {
+    const index = this.hash(key);
+    let position = index;
+    let i = 0;
+    while (i < this.table.length) {
+      if (this.table[position]?.key === key) {
+        // On met une tombe à la place de l'élément à supprimer :
         this.table[position] = null;
         this.size--;
-      } else {
-        let index = position + 1;
-        if (index === this.table.length) {
-          index = 0;
-        }
-        while (
-          this.table[index] !== undefined &&
-          this.table[index]?.key !== key
-        ) {
-          index++;
-          if (index === this.table.length) {
-            index = 0;
-          }
-        }
-        if (this.table[index]?.key === key) {
-          this.table[index] = null;
-          this.size--;
-        }
+        return;
+      } else if (this.table[position] === undefined) {
+        return;
       }
+      position = this.probe(position);
+      i++;
     }
   }
 

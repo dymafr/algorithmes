@@ -23,6 +23,7 @@ export default class HashTableLinearProbing {
       return index + 1;
     }
   }
+
   set(key, value = null) {
     const index = this.hash(key);
     let position = index;

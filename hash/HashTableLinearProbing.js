@@ -23,7 +23,6 @@ export default class HashTableLinearProbing {
       return index + 1;
     }
   }
-
   set(key, value = null) {
     const index = this.hash(key);
     let position = index;
@@ -54,6 +53,8 @@ export default class HashTableLinearProbing {
     while (i < this.table.length) {
       if (this.table[position]?.key === key) {
         return this.table[position].value;
+      } else if (this.table[position] === undefined) {
+        return null;
       }
       position = this.probe(position);
       i++;

@@ -1,4 +1,4 @@
-import BinarySearchTree from './binary_search_tree.js';
+import BinarySearchTree from './BinarySearchTree.js';
 
 describe('##Suite de tests BinarySearchTree', () => {
   let bst;
@@ -9,14 +9,12 @@ describe('##Suite de tests BinarySearchTree', () => {
 
   test('Un BST nouvellement créée doit être vide', () => {
     expect(bst.isEmpty()).toBe(true);
-    expect(bst.size).toBe(0);
   });
 
   test("Insertion d'un élément dans un BST vide", () => {
     bst.insert(1);
     expect(bst.root.key).toBe(1);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(1);
   });
 
   test('Insertion de deux éléments dont un supérieur à la racine dans un BST', () => {
@@ -25,7 +23,14 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.key).toBe(10);
     expect(bst.root.right.key).toBe(22);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(2);
+  });
+
+  test('Insertion de deux éléments avec la même clé', () => {
+    bst.insert(10);
+    bst.insert(10);
+    expect(bst.root.key).toBe(10);
+    expect(bst.root.right.key).toBe(10);
+    expect(bst.isEmpty()).toBe(false);
   });
 
   test('Insertion de deux éléments dont un inférieur à la racine dans un BST', () => {
@@ -34,7 +39,6 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.key).toBe(10);
     expect(bst.root.left.key).toBe(5);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(2);
   });
 
   test('Insertion de trois éléments dont un inférieur et un supérieur dans un BST', () => {
@@ -45,7 +49,6 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.left.key).toBe(5);
     expect(bst.root.right.key).toBe(22);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(3);
   });
 
   test('Insertion de quatre éléments dont deux inférieurs et un supérieur dans un BST', () => {
@@ -58,7 +61,6 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.left.left.key).toBe(3);
     expect(bst.root.right.key).toBe(22);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(4);
   });
 
   test('Insertion de quatre éléments dont un inférieur et deux supérieurs dans un BST', () => {
@@ -71,7 +73,6 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.right.key).toBe(22);
     expect(bst.root.right.right.key).toBe(30);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(4);
   });
 
   test('Insertion de dix éléments dans un BST', () => {
@@ -96,7 +97,6 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.root.right.left.key).toBe(50);
     expect(bst.root.right.right.key).toBe(91);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(10);
   });
 
   test("Recherche d'un élément dans un BST vide", () => {
@@ -193,43 +193,39 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.delete(1)).toBe(null);
   });
 
-  test('Supprimer un élément dans un BST d un élément', () => {
+  test("Supprimer un élément dans un BST d'un élément", () => {
     bst.insert(1);
-    expect(bst.delete(1).key).toBe(1);
+    expect(bst.delete(1)).toBe(true);
     expect(bst.isEmpty()).toBe(true);
-    expect(bst.size).toBe(0);
   });
 
   test('Supprimer un élément sans enfant dans un BST de 3', () => {
     bst.insert(42);
     bst.insert(20);
     bst.insert(65);
-    expect(bst.delete(20).key).toBe(20);
+    expect(bst.delete(20)).toBe(true);
     expect(bst.root.key).toBe(42);
     expect(bst.root.left).toBe(null);
     expect(bst.root.right.key).toBe(65);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(2);
   });
 
   test('Supprimer la racine avec un enfant dans un BST de 2', () => {
     bst.insert(42);
     bst.insert(20);
-    expect(bst.delete(42).key).toBe(42);
+    expect(bst.delete(42)).toBe(true);
     expect(bst.root.key).toBe(20);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(1);
   });
 
   test('Supprimer la racine avec deux enfants dans un BST de 3', () => {
     bst.insert(42);
     bst.insert(20);
     bst.insert(65);
-    expect(bst.delete(42).key).toBe(42);
+    expect(bst.delete(42)).toBe(true);
     expect(bst.root.key).toBe(65);
     expect(bst.root.left.key).toBe(20);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(2);
   });
 
   test('Supprimer un élément avec un enfant à droite dans un BST de 4', () => {
@@ -237,12 +233,11 @@ describe('##Suite de tests BinarySearchTree', () => {
     bst.insert(20);
     bst.insert(65);
     bst.insert(29);
-    expect(bst.delete(20).key).toBe(20);
+    expect(bst.delete(20)).toBe(true);
     expect(bst.root.key).toBe(42);
     expect(bst.root.left.key).toBe(29);
     expect(bst.root.right.key).toBe(65);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(3);
   });
 
   test('Supprimer un élément avec un enfant à gauche dans un BST de 4', () => {
@@ -250,12 +245,11 @@ describe('##Suite de tests BinarySearchTree', () => {
     bst.insert(20);
     bst.insert(65);
     bst.insert(11);
-    expect(bst.delete(20).key).toBe(20);
+    expect(bst.delete(20)).toBe(true);
     expect(bst.root.key).toBe(42);
     expect(bst.root.left.key).toBe(11);
     expect(bst.root.right.key).toBe(65);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(3);
   });
 
   test('Supprimer un élément avec deux enfants dans un BST de 5', () => {
@@ -264,12 +258,11 @@ describe('##Suite de tests BinarySearchTree', () => {
     bst.insert(65);
     bst.insert(11);
     bst.insert(29);
-    expect(bst.delete(20).key).toBe(20);
+    expect(bst.delete(20)).toBe(true);
     expect(bst.root.key).toBe(42);
     expect(bst.root.left.key).toBe(29);
     expect(bst.root.left.left.key).toBe(11);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(4);
   });
 
   test('Supprimer un élément avec deux enfants dans un BST de 10', () => {
@@ -283,13 +276,12 @@ describe('##Suite de tests BinarySearchTree', () => {
     bst.insert(8);
     bst.insert(16);
     bst.insert(26);
-    expect(bst.delete(20).key).toBe(20);
+    expect(bst.delete(20)).toBe(true);
     expect(bst.root.key).toBe(42);
     expect(bst.root.left.key).toBe(26);
     expect(bst.root.left.left.key).toBe(11);
     expect(bst.root.left.left.right.key).toBe(16);
     expect(bst.root.left.right.key).toBe(29);
     expect(bst.isEmpty()).toBe(false);
-    expect(bst.size).toBe(9);
   });
 });

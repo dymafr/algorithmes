@@ -1,3 +1,4 @@
+import { QueueLL } from '../queue/QueueLL.js';
 class Node {
   constructor(key) {
     this.key = key;
@@ -9,34 +10,27 @@ class Node {
 export default class BinarySearchTree {
   constructor() {
     this.root = null;
-    this.size = 0;
   }
 
   insert(key) {
     const newNode = new Node(key);
-    if (this.root === null) {
-      this.root = newNode;
-    } else {
-      let current = this.root;
-      while (true) {
-        if (key === current.key) {
-          break;
-        } else if (key < current.key) {
-          if (current.left === null) {
-            current.left = newNode;
-            break;
-          }
-          current = current.left;
-        } else if (key > current.key) {
-          if (current.right === null) {
-            current.right = newNode;
-            break;
-          }
-          current = current.right;
-        }
+    let current = this.root;
+    let parent = null;
+    while (current !== null) {
+      parent = current;
+      if (key < current.key) {
+        current = current.left;
+      } else {
+        current = current.right;
       }
     }
-    this.size++;
+    if (parent === null) {
+      this.root = newNode;
+    } else if (key < parent.key) {
+      parent.left = newNode;
+    } else {
+      parent.right = newNode;
+    }
   }
 
   search(searchedKey) {
@@ -69,7 +63,6 @@ export default class BinarySearchTree {
 
   delete(key) {
     let current = this.root;
-    let deletedNode = null;
     let parent = null;
     // Recherche de la Node à supprimer
     while (current !== null && current.key !== key) {
@@ -82,8 +75,6 @@ export default class BinarySearchTree {
     }
     if (current === null) {
       return null;
-    } else {
-      deletedNode = { ...current };
     }
     // Cas 1 : pas d'enfant
     if (current.left === null && current.right === null) {
@@ -127,10 +118,26 @@ export default class BinarySearchTree {
       }
       current.key = successor.key;
     }
-    this.size--;
-    return deletedNode;
+    return true;
   }
 
+  // Parcours en largeur (BFS)
+  levelOrderTraversal() {
+    const queue = new QueueLL();
+    queue.enqueue(this.root);
+    while (!queue.isEmpty()) {
+      const current = queue.dequeue();
+      console.log(current.key);
+      if (current.left !== null) {
+        queue.enqueue(current.left);
+      }
+      if (current.right !== null) {
+        queue.enqueue(current.right);
+      }
+    }
+  }
+
+  // Parcours en profondeur (DFS)
   inOrderTreeWalk(node) {
     if (node !== null) {
       this.inOrderTreeWalk(node.left);

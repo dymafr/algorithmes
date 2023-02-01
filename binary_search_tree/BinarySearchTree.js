@@ -53,6 +53,14 @@ export default class BinarySearchTree {
     return current.key;
   }
 
+  minfrom(node) {
+    let current = node;
+    while (current.left !== null) {
+      current = current.left;
+    }
+    return current;
+  }
+
   max() {
     let current = this.root;
     while (current.right !== null) {
@@ -74,7 +82,7 @@ export default class BinarySearchTree {
       }
     }
     if (current === null) {
-      return null;
+      return;
     }
     // Cas 1 : pas d'enfant
     if (current.left === null && current.right === null) {
@@ -118,7 +126,33 @@ export default class BinarySearchTree {
       }
       current.key = successor.key;
     }
-    return true;
+  }
+
+  deleteRecursive(key) {
+    this.root = this.deleteNode(this.root, key);
+  }
+
+  deleteNode(node, key) {
+    if (!node) {
+      node = null;
+    } else if (key > node.key) {
+      node.right = this.deleteNode(node.right, key);
+    } else if (key < node.key) {
+      node.left = this.deleteNode(node.left, key);
+    } else {
+      if (!node.left && !node.right) {
+        node = null;
+      } else if (!node.left) {
+        node = node.right;
+      } else if (!node.right) {
+        node = node.left;
+      } else {
+        const minNode = this.minfrom(node.right);
+        node.key = minNode.key;
+        node.right = this.deleteNode(node.right, minNode.key);
+      }
+    }
+    return node;
   }
 
   // Parcours en largeur (BFS)

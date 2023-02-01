@@ -28,7 +28,7 @@ export default class BinarySearchTree {
       this.root = newNode;
     } else if (key < parent.key) {
       parent.left = newNode;
-    } else {
+    } else if (key > parent.key) {
       parent.right = newNode;
     }
   }

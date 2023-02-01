@@ -29,7 +29,8 @@ describe('##Suite de tests BinarySearchTree', () => {
     bst.insert(10);
     bst.insert(10);
     expect(bst.root.key).toBe(10);
-    expect(bst.root.right.key).toBe(10);
+    expect(bst.root.right).toBe(null);
+    expect(bst.root.right).toBe(null);
     expect(bst.isEmpty()).toBe(false);
   });
 

@@ -269,6 +269,51 @@ describe('##Suite de tests BinarySearchTree', () => {
     expect(bst.isEmpty()).toBe(false);
   });
 
+  test('Supprimer un élément avec deux enfants dans un autre BST', () => {
+    bst.insert(8);
+    bst.insert(3);
+    bst.insert(10);
+    bst.insert(1);
+    bst.insert(6);
+    bst.insert(14);
+    bst.insert(4);
+    bst.insert(7);
+    bst.insert(13);
+    bst.delete(3);
+    expect(bst.root.key).toBe(8);
+    expect(bst.root.left.key).toBe(4);
+    expect(bst.root.left.left.key).toBe(1);
+    expect(bst.root.left.right.key).toBe(6);
+    expect(bst.root.left.right.right.key).toBe(7);
+    expect(bst.root.left.right.right.left).toBe(null);
+    expect(bst.root.right.key).toBe(10);
+    expect(bst.root.right.right.key).toBe(14);
+    expect(bst.root.right.right.left.key).toBe(13);
+    expect(bst.isEmpty()).toBe(false);
+  });
+
+  test('Supprimer la racine avec deux enfants dans un BST', () => {
+    bst.insert(8);
+    bst.insert(3);
+    bst.insert(10);
+    bst.insert(1);
+    bst.insert(6);
+    bst.insert(14);
+    bst.insert(4);
+    bst.insert(7);
+    bst.insert(13);
+    bst.delete(8);
+    expect(bst.root.key).toBe(10);
+    expect(bst.root.left.key).toBe(3);
+    expect(bst.root.left.left.key).toBe(1);
+    expect(bst.root.left.right.key).toBe(6);
+    expect(bst.root.left.right.right.key).toBe(7);
+    expect(bst.root.left.right.left.key).toBe(4);
+    expect(bst.root.right.key).toBe(14);
+    expect(bst.root.right.left.key).toBe(13);
+    expect(bst.isEmpty()).toBe(false);
+  });
+
   test('Supprimer un élément avec deux enfants dans un BST de 10', () => {
     bst.insert(42);
     bst.insert(20);

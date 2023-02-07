@@ -49,7 +49,6 @@ describe('##Suite de tests Tas binaire max', () => {
     maxHeap.insert(41);
     maxHeap.insert(42);
     maxHeap.insert(43);
-    maxHeap.print();
     expect(maxHeap.heap).toEqual([43, 41, 42]);
   });
 

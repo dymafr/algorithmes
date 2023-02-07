@@ -12,7 +12,7 @@ export default class MaxBinaryHeap {
 
   insert(value) {
     this.heap.push(value);
-    this.heapityUpRecursive(); // Itératif ou récursif
+    this.heapifyUpRecursive(); // Itératif ou récursif
   }
 
   heapifyUpIterative() {
@@ -30,11 +30,11 @@ export default class MaxBinaryHeap {
     }
   }
 
-  heapityUpRecursive(index = this.heap.length - 1) {
+  heapifyUpRecursive(index = this.heap.length - 1) {
     let parentIndex = Math.floor((index - 1) / 2);
     if (this.heap[parentIndex] < this.heap[index]) {
       this.swap(parentIndex, index);
-      this.heapityUpRecursive(parentIndex);
+      this.heapifyUpRecursive(parentIndex);
     }
   }
 

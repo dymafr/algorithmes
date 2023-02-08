@@ -6,12 +6,12 @@ export default class PriorityQueue {
     this.heap = [];
   }
 
-  add(item) {
+  insert(item) {
     this.heap.push(item);
     this.heapifyUpRecursive();
   }
 
-  poll() {
+  extractMax() {
     const item = this.heap[0];
     const lastItem = this.heap.pop();
     if (this.heap.length > 0) {
@@ -21,7 +21,7 @@ export default class PriorityQueue {
     return item;
   }
 
-  peek() {
+  maximum() {
     return this.heap[0];
   }
 

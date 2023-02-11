@@ -99,4 +99,31 @@ describe('##Suite de tests Tas binaire max', () => {
     expect(maxHeap.extractMax()).toEqual(55);
     expect(maxHeap.heap).toEqual([41, 39, 33, 18, 27, 12]);
   });
+
+  it("##Test de la méthode extractMax sur un tas avec plus d éléments jusqu'a quil ny ait plus d'élements", () => {
+    maxHeap.insert(12);
+    maxHeap.insert(18);
+    maxHeap.insert(27);
+    maxHeap.insert(33);
+    maxHeap.insert(39);
+    maxHeap.insert(41);
+    maxHeap.insert(55);
+    maxHeap.insert(2);
+    expect(maxHeap.extractMax()).toEqual(55);
+    expect(maxHeap.heap).toEqual([41, 33, 39, 12, 27, 18, 2]);
+    expect(maxHeap.extractMax()).toEqual(41);
+    expect(maxHeap.heap).toEqual([39, 33, 18, 12, 27, 2]);
+    expect(maxHeap.extractMax()).toEqual(39);
+    expect(maxHeap.heap).toEqual([33, 27, 18, 12, 2]);
+    expect(maxHeap.extractMax()).toEqual(33);
+    expect(maxHeap.heap).toEqual([27, 12, 18, 2]);
+    expect(maxHeap.extractMax()).toEqual(27);
+    expect(maxHeap.heap).toEqual([18, 12, 2]);
+    expect(maxHeap.extractMax()).toEqual(18);
+    expect(maxHeap.heap).toEqual([12, 2]);
+    expect(maxHeap.extractMax()).toEqual(12);
+    expect(maxHeap.heap).toEqual([2]);
+    expect(maxHeap.extractMax()).toEqual(2);
+    expect(maxHeap.heap).toEqual([]);
+  });
 });

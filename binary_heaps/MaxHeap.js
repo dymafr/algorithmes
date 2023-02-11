@@ -46,7 +46,7 @@ export default class MaxBinaryHeap {
     const end = this.heap.pop();
     if (this.heap.length > 0) {
       this.heap[0] = end;
-      this.heapifyDownRecursive(); // Itératif ou récursif
+      this.heapifyDownIterative(); // Itératif ou récursif
     }
     return max;
   }
@@ -54,37 +54,27 @@ export default class MaxBinaryHeap {
   // Itératif
   heapifyDownIterative() {
     let index = 0;
+    let left = index * 2 + 1;
+    let right = index * 2 + 2;
     const length = this.heap.length;
-    const element = this.heap[0];
-    while (true) {
-      let leftChildIndex = 2 * index + 1;
-      let rightChildIndex = 2 * index + 2;
-      let leftChild, rightChild;
-      let swap = null;
-
-      if (leftChildIndex < length) {
-        leftChild = this.heap[leftChildIndex];
-        if (leftChild > element) {
-          swap = leftChildIndex;
-        }
+    while (
+      index < length &&
+      left < length &&
+      (this.heap[left] > this.heap[index] ||
+        this.heap[right] > this.heap[index])
+    ) {
+      let max;
+      if (right >= length) {
+        max = left;
+      } else if (this.heap[left] > this.heap[right]) {
+        max = left;
+      } else {
+        max = right;
       }
-
-      if (rightChildIndex < length) {
-        rightChild = this.heap[rightChildIndex];
-        if (
-          (swap === null && rightChild > element) ||
-          (swap !== null && rightChild > leftChild)
-        ) {
-          swap = rightChildIndex;
-        }
-      }
-
-      if (swap === null) {
-        break;
-      }
-      this.heap[index] = this.heap[swap];
-      this.heap[swap] = element;
-      index = swap;
+      this.swap(index, max);
+      index = max;
+      left = index * 2 + 1;
+      right = index * 2 + 2;
     }
   }
 

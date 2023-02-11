@@ -16,7 +16,6 @@ export default class AVLTree {
     if (N === null) {
       return 0;
     }
-
     return N.height;
   }
 
@@ -62,7 +61,7 @@ export default class AVLTree {
 
     node.height = 1 + Math.max(this.height(node.left), this.height(node.right));
 
-    let balanceFactor = this.getBalanceFactor(node);
+    const balanceFactor = this.getBalanceFactor(node);
 
     if (balanceFactor > 1) {
       if (value < node.left.value) {
@@ -121,9 +120,9 @@ export default class AVLTree {
           root = temp;
         }
       } else {
-        let temp = this.getMinNode(root.right);
-        root.value = temp.value;
-        root.right = this.deleteNode(root.right, temp.value);
+        const minNode = this.getMinNode(root.right);
+        root.value = minNode.value;
+        root.right = this.deleteNode(root.right, minNode.value);
       }
     }
     if (root == null) {
@@ -132,7 +131,7 @@ export default class AVLTree {
 
     root.height = Math.max(this.height(root.left), this.height(root.right)) + 1;
 
-    let balanceFactor = this.getBalanceFactor(root);
+    const balanceFactor = this.getBalanceFactor(root);
     if (balanceFactor > 1) {
       if (this.getBalanceFactor(root.left) >= 0) {
         return this.rightRotate(root);

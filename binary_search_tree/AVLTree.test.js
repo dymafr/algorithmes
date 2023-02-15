@@ -497,12 +497,31 @@ describe('##Tests randomisés équilibre AVL', () => {
     tree = new AVLTree();
   });
 
-  describe('#Tests dynamiques randomisés', () => {
-    for (let i = 0; i < 200; i++) {
+  describe('#Tests dynamiques randomisés insertion', () => {
+    for (let i = 0; i < 100; i++) {
       test(`Test d'équilibre aléatoire ${i}`, () => {
-        for (let j = 0; j < 100; j++) {
+        const randomNodeNumber = Math.floor(Math.random() * 200);
+        for (let j = 0; j <= randomNodeNumber; j++) {
           const random = Math.floor(Math.random() * 100 + 1);
           tree.insert(random);
+          expect(tree.isTreeBalanced()).toBe(true);
+        }
+      });
+    }
+  });
+
+  describe('#Tests dynamiques randomisés suppression', () => {
+    for (let i = 0; i < 100; i++) {
+      test(`Test d'équilibre aléatoire ${i}`, () => {
+        const randomNodeNumber = Math.floor(Math.random() * 200);
+        for (let j = 0; j <= randomNodeNumber; j++) {
+          const random = Math.floor(Math.random() * 30 + 1);
+          tree.insert(random);
+          const randomNumberDeletions = Math.floor(Math.random() * 20 + 1);
+          for (let k = 0; k <= randomNumberDeletions; k++) {
+            const randomDeletion = Math.floor(Math.random() * 30 + 1);
+            tree.delete(randomDeletion);
+          }
           expect(tree.isTreeBalanced()).toBe(true);
         }
       });

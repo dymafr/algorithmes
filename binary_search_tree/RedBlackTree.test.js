@@ -129,4 +129,43 @@ describe('##Suite de tests RBTree', () => {
     expect(tree.root.right.color).toBe('black');
     expect(tree.root.left.right.color).toBe('red');
   });
+
+  describe('##Tests randomisés équilibre Arbre RB', () => {
+    let tree;
+
+    beforeEach(() => {
+      tree = new RBTree();
+    });
+
+    describe('#Tests dynamiques randomisés insertions', () => {
+      for (let i = 0; i < 200; i++) {
+        test(`Test d'équilibre aléatoire ${i}`, () => {
+          const randomNodeNumber = Math.floor(Math.random() * 200);
+          for (let j = 0; j <= randomNodeNumber; j++) {
+            const random = Math.floor(Math.random() * 100 + 1);
+            tree.insert(random);
+            expect(tree.isRBTree()).toBe(true);
+          }
+        });
+      }
+    });
+
+    describe('#Tests dynamiques randomisés suppression', () => {
+      for (let i = 0; i < 100; i++) {
+        test(`Test d'équilibre aléatoire ${i}`, () => {
+          const randomNodeNumber = Math.floor(Math.random() * 200);
+          for (let j = 0; j <= randomNodeNumber; j++) {
+            const random = Math.floor(Math.random() * 30 + 1);
+            tree.insert(random);
+            const randomNumberDeletions = Math.floor(Math.random() * 20 + 1);
+            for (let k = 0; k <= randomNumberDeletions; k++) {
+              const randomDeletion = Math.floor(Math.random() * 30 + 1);
+              tree.delete(randomDeletion);
+            }
+            expect(tree.isRBTree()).toBe(true);
+          }
+        });
+      }
+    });
+  });
 });

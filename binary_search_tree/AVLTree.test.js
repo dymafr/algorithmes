@@ -489,3 +489,23 @@ describe('##Suite de tests AVLTree', () => {
     });
   });
 });
+
+describe('##Tests randomisés équilibre AVL', () => {
+  let tree;
+
+  beforeEach(() => {
+    tree = new AVLTree();
+  });
+
+  describe('#Tests dynamiques randomisés', () => {
+    for (let i = 0; i < 200; i++) {
+      test(`Test d'équilibre aléatoire ${i}`, () => {
+        for (let j = 0; j < 100; j++) {
+          const random = Math.floor(Math.random() * 100 + 1);
+          tree.insert(random);
+          expect(tree.isTreeBalanced()).toBe(true);
+        }
+      });
+    }
+  });
+});

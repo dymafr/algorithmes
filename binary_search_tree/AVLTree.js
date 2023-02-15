@@ -39,6 +39,26 @@ export default class AVLTree {
     return y;
   }
 
+  isTreeBalanced() {
+    return this.isBalanced(this.root);
+  }
+
+  isBalanced(node) {
+    if (node === null) {
+      return true;
+    }
+    const lh = this.height(node.left);
+    const rh = this.height(node.right);
+    if (
+      Math.abs(lh - rh) <= 1 &&
+      this.isBalanced(node.left) &&
+      this.isBalanced(node.right)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   getBalanceFactor(N) {
     if (N == null) {
       return 0;

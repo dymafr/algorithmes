@@ -1,6 +1,6 @@
 class Node {
-  constructor(value) {
-    this.value = value;
+  constructor(key) {
+    this.key = key;
     this.left = null;
     this.right = null;
     this.height = 1;
@@ -46,15 +46,15 @@ export default class AVLTree {
     return this.height(N.left) - this.height(N.right);
   }
 
-  insertNode(node, value) {
+  insertNode(node, key) {
     if (node === null) {
-      return new Node(value);
+      return new Node(key);
     }
 
-    if (value < node.value) {
-      node.left = this.insertNode(node.left, value);
-    } else if (value > node.value) {
-      node.right = this.insertNode(node.right, value);
+    if (key < node.key) {
+      node.left = this.insertNode(node.left, key);
+    } else if (key > node.key) {
+      node.right = this.insertNode(node.right, key);
     } else {
       return node;
     }
@@ -64,18 +64,18 @@ export default class AVLTree {
     const balanceFactor = this.getBalanceFactor(node);
 
     if (balanceFactor > 1) {
-      if (value < node.left.value) {
+      if (key < node.left.key) {
         return this.rightRotate(node);
-      } else if (value > node.left.value) {
+      } else if (key > node.left.key) {
         node.left = this.leftRotate(node.left);
         return this.rightRotate(node);
       }
     }
 
     if (balanceFactor < -1) {
-      if (value > node.right.value) {
+      if (key > node.right.key) {
         return this.leftRotate(node);
-      } else if (value < node.right.value) {
+      } else if (key < node.right.key) {
         node.right = this.rightRotate(node.right);
         return this.leftRotate(node);
       }
@@ -84,8 +84,8 @@ export default class AVLTree {
     return node;
   }
 
-  insert(value) {
-    this.root = this.insertNode(this.root, value);
+  insert(key) {
+    this.root = this.insertNode(this.root, key);
   }
 
   getMinNode(node) {
@@ -96,14 +96,14 @@ export default class AVLTree {
     return current;
   }
 
-  deleteNode(root, value) {
+  deleteNode(root, key) {
     if (root == null) {
       return root;
     }
-    if (value < root.value) {
-      root.left = this.deleteNode(root.left, value);
-    } else if (value > root.value) {
-      root.right = this.deleteNode(root.right, value);
+    if (key < root.key) {
+      root.left = this.deleteNode(root.left, key);
+    } else if (key > root.key) {
+      root.right = this.deleteNode(root.right, key);
     } else {
       if (root.left === null || root.right === null) {
         let temp = null;
@@ -121,8 +121,8 @@ export default class AVLTree {
         }
       } else {
         const minNode = this.getMinNode(root.right);
-        root.value = minNode.value;
-        root.right = this.deleteNode(root.right, minNode.value);
+        root.key = minNode.key;
+        root.right = this.deleteNode(root.right, minNode.key);
       }
     }
     if (root == null) {
@@ -151,7 +151,7 @@ export default class AVLTree {
     return root;
   }
 
-  delete(value) {
-    this.root = this.deleteNode(this.root, value);
+  delete(key) {
+    this.root = this.deleteNode(this.root, key);
   }
 }

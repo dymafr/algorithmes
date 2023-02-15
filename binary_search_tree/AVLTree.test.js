@@ -14,10 +14,10 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
-        right: { value: 3, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
+        right: { key: 3, left: null, right: null, height: 1 },
       },
     });
   });
@@ -28,41 +28,41 @@ describe('##Suite de tests AVLTree', () => {
     tree.insert(2);
     expect(tree).toEqual({
       root: {
-        value: 3,
+        key: 3,
         height: 2,
-        left: { value: 2, left: null, right: null, height: 1 },
-        right: { value: 4, left: null, right: null, height: 1 },
+        left: { key: 2, left: null, right: null, height: 1 },
+        right: { key: 4, left: null, right: null, height: 1 },
       },
     });
 
     tree.insert(1);
     expect(tree).toEqual({
       root: {
-        value: 3,
+        key: 3,
         height: 3,
         left: {
-          value: 2,
-          left: { value: 1, left: null, right: null, height: 1 },
+          key: 2,
+          left: { key: 1, left: null, right: null, height: 1 },
           right: null,
           height: 2,
         },
-        right: { value: 4, left: null, right: null, height: 1 },
+        right: { key: 4, left: null, right: null, height: 1 },
       },
     });
 
     tree.insert(0);
     expect(tree).toEqual({
       root: {
-        value: 3,
+        key: 3,
         height: 3,
         left: {
-          value: 1,
+          key: 1,
           height: 2,
-          left: { value: 0, left: null, right: null, height: 1 },
-          right: { value: 2, left: null, right: null, height: 1 },
+          left: { key: 0, left: null, right: null, height: 1 },
+          right: { key: 2, left: null, right: null, height: 1 },
         },
         right: {
-          value: 4,
+          key: 4,
           height: 1,
           left: null,
           right: null,
@@ -78,10 +78,10 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
-        right: { value: 3, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
+        right: { key: 3, left: null, right: null, height: 1 },
       },
     });
   });
@@ -93,10 +93,10 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
-        right: { value: 3, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
+        right: { key: 3, left: null, right: null, height: 1 },
       },
     });
   });
@@ -108,10 +108,10 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
-        right: { value: 3, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
+        right: { key: 3, left: null, right: null, height: 1 },
       },
     });
   });
@@ -123,10 +123,10 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
-        right: { value: 3, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
+        right: { key: 3, left: null, right: null, height: 1 },
       },
     });
 
@@ -135,14 +135,14 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 3,
-        left: { value: 1, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
         right: {
-          value: 4,
+          key: 4,
           height: 2,
-          left: { value: 3, left: null, right: null, height: 1 },
-          right: { value: 5, left: null, right: null, height: 1 },
+          left: { key: 3, left: null, right: null, height: 1 },
+          right: { key: 5, left: null, right: null, height: 1 },
         },
       },
     });
@@ -151,19 +151,19 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 4,
+        key: 4,
         height: 3,
         left: {
-          value: 2,
+          key: 2,
           height: 2,
-          left: { value: 1, left: null, right: null, height: 1 },
-          right: { value: 3, left: null, right: null, height: 1 },
+          left: { key: 1, left: null, right: null, height: 1 },
+          right: { key: 3, left: null, right: null, height: 1 },
         },
         right: {
-          value: 5,
+          key: 5,
           height: 2,
           left: null,
-          right: { value: 6, left: null, right: null, height: 1 },
+          right: { key: 6, left: null, right: null, height: 1 },
         },
       },
     });
@@ -172,19 +172,19 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 4,
+        key: 4,
         height: 3,
         left: {
-          value: 2,
+          key: 2,
           height: 2,
-          left: { value: 1, left: null, right: null, height: 1 },
-          right: { value: 3, left: null, right: null, height: 1 },
+          left: { key: 1, left: null, right: null, height: 1 },
+          right: { key: 3, left: null, right: null, height: 1 },
         },
         right: {
-          value: 6,
+          key: 6,
           height: 2,
-          left: { value: 5, left: null, right: null, height: 1 },
-          right: { value: 7, left: null, right: null, height: 1 },
+          left: { key: 5, left: null, right: null, height: 1 },
+          right: { key: 7, left: null, right: null, height: 1 },
         },
       },
     });
@@ -193,23 +193,23 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 4,
+        key: 4,
         height: 4,
         left: {
-          value: 2,
+          key: 2,
           height: 2,
-          left: { value: 1, left: null, right: null, height: 1 },
-          right: { value: 3, left: null, right: null, height: 1 },
+          left: { key: 1, left: null, right: null, height: 1 },
+          right: { key: 3, left: null, right: null, height: 1 },
         },
         right: {
-          value: 6,
+          key: 6,
           height: 3,
-          left: { value: 5, left: null, right: null, height: 1 },
+          left: { key: 5, left: null, right: null, height: 1 },
           right: {
-            value: 7,
+            key: 7,
             height: 2,
             left: null,
-            right: { value: 8, left: null, right: null, height: 1 },
+            right: { key: 8, left: null, right: null, height: 1 },
           },
         },
       },
@@ -228,24 +228,24 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 5,
+        key: 5,
         height: 4,
         left: {
-          value: 3,
+          key: 3,
           height: 3,
           left: {
-            value: 2,
+            key: 2,
             height: 2,
-            left: { value: 1, left: null, right: null, height: 1 },
+            left: { key: 1, left: null, right: null, height: 1 },
             right: null,
           },
-          right: { value: 4, left: null, right: null, height: 1 },
+          right: { key: 4, left: null, right: null, height: 1 },
         },
         right: {
-          value: 7,
+          key: 7,
           height: 2,
-          left: { value: 6, left: null, right: null, height: 1 },
-          right: { value: 8, left: null, right: null, height: 1 },
+          left: { key: 6, left: null, right: null, height: 1 },
+          right: { key: 8, left: null, right: null, height: 1 },
         },
       },
     });
@@ -262,19 +262,19 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 25,
+        key: 25,
         height: 3,
         left: {
-          value: 20,
+          key: 20,
           height: 2,
-          left: { value: 10, left: null, right: null, height: 1 },
-          right: { value: 22, left: null, right: null, height: 1 },
+          left: { key: 10, left: null, right: null, height: 1 },
+          right: { key: 22, left: null, right: null, height: 1 },
         },
         right: {
-          value: 40,
+          key: 40,
           height: 2,
-          left: { value: 30, left: null, right: null, height: 1 },
-          right: { value: 50, left: null, right: null, height: 1 },
+          left: { key: 30, left: null, right: null, height: 1 },
+          right: { key: 50, left: null, right: null, height: 1 },
         },
       },
     });
@@ -294,29 +294,29 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 43,
+        key: 43,
         height: 4,
         left: {
-          value: 28,
+          key: 28,
           height: 3,
           left: {
-            value: 16,
+            key: 16,
             height: 2,
-            left: { value: 6, left: null, right: null, height: 1 },
-            right: { value: 24, left: null, right: null, height: 1 },
+            left: { key: 6, left: null, right: null, height: 1 },
+            right: { key: 24, left: null, right: null, height: 1 },
           },
           right: {
-            value: 30,
+            key: 30,
             height: 2,
             left: null,
-            right: { value: 32, left: null, right: null, height: 1 },
+            right: { key: 32, left: null, right: null, height: 1 },
           },
         },
         right: {
-          value: 92,
+          key: 92,
           height: 2,
-          left: { value: 62, left: null, right: null, height: 1 },
-          right: { value: 97, left: null, right: null, height: 1 },
+          left: { key: 62, left: null, right: null, height: 1 },
+          right: { key: 97, left: null, right: null, height: 1 },
         },
       },
     });
@@ -334,7 +334,7 @@ describe('##Suite de tests AVLTree', () => {
     tree.delete(1);
     expect(tree).toEqual({
       root: {
-        value: 2,
+        key: 2,
         height: 1,
         left: null,
         right: null,
@@ -349,9 +349,9 @@ describe('##Suite de tests AVLTree', () => {
     tree.delete(2);
     expect(tree).toEqual({
       root: {
-        value: 3,
+        key: 3,
         height: 2,
-        left: { value: 1, left: null, right: null, height: 1 },
+        left: { key: 1, left: null, right: null, height: 1 },
         right: null,
       },
     });
@@ -384,24 +384,24 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 28,
+        key: 28,
         height: 4,
         left: {
-          value: 16,
+          key: 16,
           height: 2,
-          left: { value: 6, left: null, right: null, height: 1 },
-          right: { value: 24, left: null, right: null, height: 1 },
+          left: { key: 6, left: null, right: null, height: 1 },
+          right: { key: 24, left: null, right: null, height: 1 },
         },
         right: {
-          value: 43,
+          key: 43,
           height: 3,
           left: {
-            value: 30,
+            key: 30,
             height: 2,
             left: null,
-            right: { value: 32, left: null, right: null, height: 1 },
+            right: { key: 32, left: null, right: null, height: 1 },
           },
-          right: { value: 97, left: null, right: null, height: 1 },
+          right: { key: 97, left: null, right: null, height: 1 },
         },
       },
     });
@@ -419,24 +419,24 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 33,
+        key: 33,
         height: 4,
         left: {
-          value: 13,
+          key: 13,
           height: 3,
           left: {
-            value: 9,
+            key: 9,
             height: 2,
-            left: { value: 8, left: null, right: null, height: 1 },
-            right: { value: 11, left: null, right: null, height: 1 },
+            left: { key: 8, left: null, right: null, height: 1 },
+            right: { key: 11, left: null, right: null, height: 1 },
           },
-          right: { value: 21, left: null, right: null, height: 1 },
+          right: { key: 21, left: null, right: null, height: 1 },
         },
         right: {
-          value: 53,
+          key: 53,
           height: 2,
           left: null,
-          right: { value: 61, left: null, right: null, height: 1 },
+          right: { key: 61, left: null, right: null, height: 1 },
         },
       },
     });
@@ -445,24 +445,24 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 33,
+        key: 33,
         height: 4,
         left: {
-          value: 9,
+          key: 9,
           height: 3,
-          left: { value: 8, left: null, right: null, height: 1 },
+          left: { key: 8, left: null, right: null, height: 1 },
           right: {
-            value: 21,
+            key: 21,
             height: 2,
-            left: { value: 11, left: null, right: null, height: 1 },
+            left: { key: 11, left: null, right: null, height: 1 },
             right: null,
           },
         },
         right: {
-          value: 53,
+          key: 53,
           height: 2,
           left: null,
-          right: { value: 61, left: null, right: null, height: 1 },
+          right: { key: 61, left: null, right: null, height: 1 },
         },
       },
     });
@@ -471,19 +471,19 @@ describe('##Suite de tests AVLTree', () => {
 
     expect(tree).toEqual({
       root: {
-        value: 21,
+        key: 21,
         height: 3,
         left: {
-          value: 9,
+          key: 9,
           height: 2,
-          left: { value: 8, left: null, right: null, height: 1 },
-          right: { value: 11, left: null, right: null, height: 1 },
+          left: { key: 8, left: null, right: null, height: 1 },
+          right: { key: 11, left: null, right: null, height: 1 },
         },
         right: {
-          value: 53,
+          key: 53,
           height: 2,
           left: null,
-          right: { value: 61, left: null, right: null, height: 1 },
+          right: { key: 61, left: null, right: null, height: 1 },
         },
       },
     });

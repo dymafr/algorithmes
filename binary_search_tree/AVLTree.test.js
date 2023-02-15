@@ -1,10 +1,32 @@
 import AVLTree from './AVLTree.js';
 
+class AVLTestTree extends AVLTree {
+  isTreeBalanced() {
+    return this.isBalanced(this.root);
+  }
+
+  isBalanced(node) {
+    if (node === null) {
+      return true;
+    }
+    const lh = this.height(node.left);
+    const rh = this.height(node.right);
+    if (
+      Math.abs(lh - rh) <= 1 &&
+      this.isBalanced(node.left) &&
+      this.isBalanced(node.right)
+    ) {
+      return true;
+    }
+    return false;
+  }
+}
+
 describe('##Suite de tests AVLTree', () => {
   let tree;
 
   beforeEach(() => {
-    tree = new AVLTree();
+    tree = new AVLTestTree();
   });
 
   test('Rotation simple Right-Right', () => {
@@ -494,7 +516,7 @@ describe('##Tests randomisés équilibre AVL', () => {
   let tree;
 
   beforeEach(() => {
-    tree = new AVLTree();
+    tree = new AVLTestTree();
   });
 
   describe('#Tests dynamiques randomisés insertion', () => {

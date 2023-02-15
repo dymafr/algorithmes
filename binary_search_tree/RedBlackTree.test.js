@@ -1,10 +1,68 @@
 import RBTree from './RedBlackTree';
 
+class RBTestTree extends RBTree {
+  isRBTree() {
+    // Root property
+    if (this.root.color !== 'black') {
+      return false;
+    }
+    return (
+      this.hasRedBlackProperty(this.root) &&
+      this.hasRedProperty(this.root) &&
+      this.hasDepthProperty(this.root)
+    );
+  }
+
+  hasRedBlackProperty(node) {
+    if (node === this.NilNode) {
+      return true;
+    }
+    if (!node.color || !node.color === 'red' || !node.color === 'black') {
+      return false;
+    }
+    return (
+      this.hasRedBlackProperty(node.left) &&
+      this.hasRedBlackProperty(node.right)
+    );
+  }
+
+  hasRedProperty(node) {
+    if (node === this.NilNode) {
+      return true;
+    }
+    if (node.color === 'red') {
+      if (node.left.color === 'red' || node.right.color === 'red') {
+        return false;
+      }
+    }
+    return this.hasRedProperty(node.left) && this.hasRedProperty(node.right);
+  }
+
+  hasDepthProperty(node) {
+    return this.hasBlackProperty(node) !== -1;
+  }
+
+  hasBlackProperty(node) {
+    if (node === null) {
+      return 0;
+    } else {
+      const leftBlackHeight =
+        this.hasBlackProperty(node.left) + (node.color === 'black' ? 1 : 0);
+      const rightBlackHeight =
+        this.hasBlackProperty(node.right) + (node.color === 'black' ? 1 : 0);
+      if (leftBlackHeight !== rightBlackHeight) {
+        return -1;
+      }
+      return leftBlackHeight;
+    }
+  }
+}
+
 describe('##Suite de tests RBTree', () => {
   let tree;
 
   beforeEach(() => {
-    tree = new RBTree();
+    tree = new RBTestTree();
   });
 
   test("Insertion d'un élément", () => {
@@ -97,7 +155,6 @@ describe('##Suite de tests RBTree', () => {
     expect(tree.root.left.key).toBe(9);
   });
 
-  // TODO fix this test
   test('Suppression de la racine', () => {
     tree.insert(17);
     tree.delete(17);
@@ -134,7 +191,7 @@ describe('##Suite de tests RBTree', () => {
     let tree;
 
     beforeEach(() => {
-      tree = new RBTree();
+      tree = new RBTestTree();
     });
 
     describe('#Tests dynamiques randomisés insertions', () => {

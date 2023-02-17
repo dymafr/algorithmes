@@ -147,6 +147,22 @@ describe('##Suite de tests RBTree', () => {
     expect(tree.root.right.left.color).toBe('red');
   });
 
+  test("Autre test d'insertion", () => {
+    tree.insert(24);
+    tree.insert(23);
+    tree.insert(12);
+    tree.insert(17);
+    tree.insert(54);
+    tree.insert(53);
+    tree.insert(52);
+    tree.insert(1);
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(0);
+
+    expect(tree.isRBTree()).toBe(true);
+  });
+
   test("Suppression d un élément qui n'existe pas", () => {
     tree.insert(17);
     tree.insert(9);

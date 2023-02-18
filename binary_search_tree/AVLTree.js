@@ -23,6 +23,13 @@ export default class AVLTree {
     return this.getNodeHeight(node.left) - this.getNodeHeight(node.right);
   }
 
+  // Rotation droite
+  // T1, T2, T3 sont les sous-arbres
+  //         y                               x
+  //        / \     Rotation droite (x)     /  \
+  //       x   T3   - - - - - - - - ->     T1   y
+  //      / \                                  / \
+  //     T1  T2                               T2  T3
   rightRotate(y) {
     const x = y.left;
     const T2 = x.right;
@@ -35,6 +42,13 @@ export default class AVLTree {
     return x;
   }
 
+  // Rotation gauche
+  // T1, T2, T3 sont les sous-arbres
+  //         x                               y
+  //        / \     Rotation gauche (y)     /  \
+  //       T1  y    - - - - - - - - ->     x    T3
+  //          / \                         /  \
+  //        T2   T3                      T1  T2
   leftRotate(x) {
     const y = x.right;
     const T2 = y.left;

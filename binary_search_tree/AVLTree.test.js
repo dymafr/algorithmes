@@ -9,8 +9,8 @@ class AVLTestTree extends AVLTree {
     if (node === null) {
       return true;
     }
-    const lh = this.height(node.left);
-    const rh = this.height(node.right);
+    const lh = this.getNodeHeight(node.left);
+    const rh = this.getNodeHeight(node.right);
     if (
       Math.abs(lh - rh) <= 1 &&
       this.isBalanced(node.left) &&

@@ -12,11 +12,15 @@ export default class AVLTree {
     this.root = null;
   }
 
-  height(N) {
-    if (N === null) {
+  getNodeHeight(node) {
+    if (node === null) {
       return 0;
     }
-    return N.height;
+    return node.height;
+  }
+
+  getBalanceFactor(node) {
+    return this.getNodeHeight(node.left) - this.getNodeHeight(node.right);
   }
 
   rightRotate(y) {
@@ -24,8 +28,10 @@ export default class AVLTree {
     const T2 = x.right;
     x.right = y;
     y.left = T2;
-    y.height = Math.max(this.height(y.left), this.height(y.right)) + 1;
-    x.height = Math.max(this.height(x.left), this.height(x.right)) + 1;
+    y.height =
+      Math.max(this.getNodeHeight(y.left), this.getNodeHeight(y.right)) + 1;
+    x.height =
+      Math.max(this.getNodeHeight(x.left), this.getNodeHeight(x.right)) + 1;
     return x;
   }
 
@@ -34,16 +40,11 @@ export default class AVLTree {
     const T2 = y.left;
     y.left = x;
     x.right = T2;
-    x.height = Math.max(this.height(x.left), this.height(x.right)) + 1;
-    y.height = Math.max(this.height(y.left), this.height(y.right)) + 1;
+    x.height =
+      Math.max(this.getNodeHeight(x.left), this.getNodeHeight(x.right)) + 1;
+    y.height =
+      Math.max(this.getNodeHeight(y.left), this.getNodeHeight(y.right)) + 1;
     return y;
-  }
-
-  getBalanceFactor(N) {
-    if (N == null) {
-      return 0;
-    }
-    return this.height(N.left) - this.height(N.right);
   }
 
   insertNode(node, key) {
@@ -59,7 +60,9 @@ export default class AVLTree {
       return node;
     }
 
-    node.height = 1 + Math.max(this.height(node.left), this.height(node.right));
+    node.height =
+      1 +
+      Math.max(this.getNodeHeight(node.left), this.getNodeHeight(node.right));
 
     const balanceFactor = this.getBalanceFactor(node);
 
@@ -129,7 +132,9 @@ export default class AVLTree {
       return root;
     }
 
-    root.height = Math.max(this.height(root.left), this.height(root.right)) + 1;
+    root.height =
+      Math.max(this.getNodeHeight(root.left), this.getNodeHeight(root.right)) +
+      1;
 
     const balanceFactor = this.getBalanceFactor(root);
     if (balanceFactor > 1) {

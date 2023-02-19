@@ -23,42 +23,64 @@ export default class AVLTree {
     return this.getNodeHeight(node.left) - this.getNodeHeight(node.right);
   }
 
-  // Rotation droite
-  // T1, T2, T3 sont les sous-arbres
-  //         y                               x
-  //        / \     Rotation droite (x)     /  \
-  //       x   T3   - - - - - - - - ->     T1   y
-  //      / \                                  / \
-  //     T1  T2                               T2  T3
-  rightRotate(y) {
-    const x = y.left;
-    const T2 = x.right;
-    x.right = y;
-    y.left = T2;
-    y.height =
-      Math.max(this.getNodeHeight(y.left), this.getNodeHeight(y.right)) + 1;
-    x.height =
-      Math.max(this.getNodeHeight(x.left), this.getNodeHeight(x.right)) + 1;
-    return x;
+  setNodeHeight(node) {
+    node.height =
+      Math.max(this.getNodeHeight(node.left), this.getNodeHeight(node.right)) +
+      1;
+  }
+
+  balanceNode(node) {
+    const balanceFactor = this.getBalanceFactor(node);
+    if (balanceFactor > 1) {
+      if (this.getBalanceFactor(node.left) >= 0) {
+        return this.rightRotate(node);
+      } else {
+        node.left = this.leftRotate(node.left);
+        return this.rightRotate(node);
+      }
+    } else if (balanceFactor < -1) {
+      if (this.getBalanceFactor(node.right) <= 0) {
+        return this.leftRotate(node);
+      } else {
+        node.right = this.rightRotate(node.right);
+        return this.leftRotate(node);
+      }
+    }
+    return node;
   }
 
   // Rotation gauche
   // T1, T2, T3 sont les sous-arbres
   //         x                               y
-  //        / \     Rotation gauche (y)     /  \
+  //        / \      Rotation gauche (y)    /  \
   //       T1  y    - - - - - - - - ->     x    T3
-  //          / \                         /  \
-  //        T2   T3                      T1  T2
+  //          / \   <- - - - - - - - -    /  \
+  //        T2  T3   Rotation droite (x) T1   T2
   leftRotate(x) {
     const y = x.right;
     const T2 = y.left;
     y.left = x;
     x.right = T2;
-    x.height =
-      Math.max(this.getNodeHeight(x.left), this.getNodeHeight(x.right)) + 1;
-    y.height =
-      Math.max(this.getNodeHeight(y.left), this.getNodeHeight(y.right)) + 1;
+    this.setNodeHeight(x);
+    this.setNodeHeight(y);
     return y;
+  }
+
+  // Rotation droite
+  // T1, T2, T3 sont les sous-arbres
+  //         y                               x
+  //        / \     Rotation droite (x)     /  \
+  //       x   T3   - - - - - - - - ->     T1   y
+  //      / \       <- - - - - - - - -         / \
+  //     T1  T2     Rotation gauche (y)       T2  T3
+  rightRotate(y) {
+    const x = y.left;
+    const T2 = x.right;
+    x.right = y;
+    y.left = T2;
+    this.setNodeHeight(y);
+    this.setNodeHeight(x);
+    return x;
   }
 
   insertNode(node, key) {
@@ -74,31 +96,8 @@ export default class AVLTree {
       return node;
     }
 
-    node.height =
-      1 +
-      Math.max(this.getNodeHeight(node.left), this.getNodeHeight(node.right));
-
-    const balanceFactor = this.getBalanceFactor(node);
-
-    if (balanceFactor > 1) {
-      if (key < node.left.key) {
-        return this.rightRotate(node);
-      } else if (key > node.left.key) {
-        node.left = this.leftRotate(node.left);
-        return this.rightRotate(node);
-      }
-    }
-
-    if (balanceFactor < -1) {
-      if (key > node.right.key) {
-        return this.leftRotate(node);
-      } else if (key < node.right.key) {
-        node.right = this.rightRotate(node.right);
-        return this.leftRotate(node);
-      }
-    }
-
-    return node;
+    this.setNodeHeight(node);
+    return this.balanceNode(node);
   }
 
   insert(key) {
@@ -113,61 +112,30 @@ export default class AVLTree {
     return current;
   }
 
-  deleteNode(root, key) {
-    if (root == null) {
-      return root;
+  deleteNode(node, key) {
+    if (node === null) {
+      return node;
     }
-    if (key < root.key) {
-      root.left = this.deleteNode(root.left, key);
-    } else if (key > root.key) {
-      root.right = this.deleteNode(root.right, key);
+    if (key < node.key) {
+      node.left = this.deleteNode(node.left, key);
+    } else if (key > node.key) {
+      node.right = this.deleteNode(node.right, key);
     } else {
-      if (root.left === null || root.right === null) {
-        let temp = null;
-        if (temp == root.left) {
-          temp = root.right;
-        } else {
-          temp = root.left;
-        }
-
-        if (temp == null) {
-          temp = root;
-          root = null;
-        } else {
-          root = temp;
-        }
+      if (!node.left && !node.right) {
+        return null;
+      } else if (!node.left) {
+        node = node.right;
+      } else if (!node.right) {
+        node = node.left;
       } else {
-        const minNode = this.getMinNode(root.right);
-        root.key = minNode.key;
-        root.right = this.deleteNode(root.right, minNode.key);
+        const minNode = this.getMinNode(node.right);
+        node.key = minNode.key;
+        node.right = this.deleteNode(node.right, minNode.key);
       }
     }
-    if (root == null) {
-      return root;
-    }
 
-    root.height =
-      Math.max(this.getNodeHeight(root.left), this.getNodeHeight(root.right)) +
-      1;
-
-    const balanceFactor = this.getBalanceFactor(root);
-    if (balanceFactor > 1) {
-      if (this.getBalanceFactor(root.left) >= 0) {
-        return this.rightRotate(root);
-      } else {
-        root.left = this.leftRotate(root.left);
-        return this.rightRotate(root);
-      }
-    }
-    if (balanceFactor < -1) {
-      if (this.getBalanceFactor(root.right) <= 0) {
-        return this.leftRotate(root);
-      } else {
-        root.right = this.rightRotate(root.right);
-        return this.leftRotate(root);
-      }
-    }
-    return root;
+    this.setNodeHeight(node);
+    return this.balanceNode(node);
   }
 
   delete(key) {

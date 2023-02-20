@@ -3,7 +3,18 @@ export default class MaxBinaryHeap {
     this.heap = [];
   }
 
-  // Pour le récursif
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+  getSize() {
+    return this.heap.length;
+  }
+
+  findMax() {
+    return this.heap[0];
+  }
+
   swap(i, j) {
     let temp = this.heap[i];
     this.heap[i] = this.heap[j];
@@ -12,21 +23,16 @@ export default class MaxBinaryHeap {
 
   insert(value) {
     this.heap.push(value);
-    this.heapifyUpRecursive(); // Itératif ou récursif
+    this.heapifyUpIterative(); // Itératif ou récursif
   }
 
   heapifyUpIterative() {
-    let index = this.heap.length - 1;
-    const element = this.heap[index];
-    while (index > 0) {
-      let parentIndex = Math.floor((index - 1) / 2);
-      let parent = this.heap[parentIndex];
-      if (element <= parent) {
-        break;
-      }
-      this.heap[parentIndex] = element;
-      this.heap[index] = parent;
-      index = parentIndex;
+    let childIndex = this.heap.length - 1;
+    let parentIndex = Math.floor((childIndex - 1) / 2);
+    while (childIndex > 0 && this.heap[childIndex] > this.heap[parentIndex]) {
+      this.swap(childIndex, parentIndex);
+      childIndex = parentIndex;
+      parentIndex = Math.floor((childIndex - 1) / 2);
     }
   }
 
@@ -39,29 +45,28 @@ export default class MaxBinaryHeap {
   }
 
   extractMax() {
-    if (this.heap.length === 0) {
-      return 'Le tas est vide';
+    if (this.isEmpty()) {
+      return null;
     }
     const max = this.heap[0];
     const end = this.heap.pop();
     if (this.heap.length > 0) {
       this.heap[0] = end;
-      this.heapifyDownIterative(); // Itératif ou récursif
+      this.heapifyDownRecursive(); // Itératif ou récursif
     }
     return max;
   }
 
-  // Itératif
   heapifyDownIterative() {
-    let index = 0;
-    let left = index * 2 + 1;
-    let right = index * 2 + 2;
+    let parentIndex = 0;
+    let left = parentIndex * 2 + 1;
+    let right = parentIndex * 2 + 2;
     const length = this.heap.length;
     while (
-      index < length &&
-      left < length &&
-      (this.heap[left] > this.heap[index] ||
-        this.heap[right] > this.heap[index])
+      (parentIndex < length &&
+        left < length &&
+        this.heap[left] > this.heap[parentIndex]) ||
+      (right < length && this.heap[right] > this.heap[parentIndex])
     ) {
       let max;
       if (right >= length) {
@@ -71,10 +76,10 @@ export default class MaxBinaryHeap {
       } else {
         max = right;
       }
-      this.swap(index, max);
-      index = max;
-      left = index * 2 + 1;
-      right = index * 2 + 2;
+      this.swap(parentIndex, max);
+      parentIndex = max;
+      left = parentIndex * 2 + 1;
+      right = parentIndex * 2 + 2;
     }
   }
 

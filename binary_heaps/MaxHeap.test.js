@@ -64,7 +64,7 @@ describe('##Suite de tests Tas binaire max', () => {
   });
 
   it('##Test de la méthode extractMax sur un tas vide', () => {
-    expect(maxHeap.extractMax()).toEqual('Le tas est vide');
+    expect(maxHeap.extractMax()).toEqual(null);
   });
 
   it('##Test de la méthode extractMax sur un tas avec un seul élément', () => {

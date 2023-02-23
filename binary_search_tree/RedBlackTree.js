@@ -17,6 +17,12 @@ export default class RedBlackTree {
     this.root = this.NilNode;
   }
 
+  // T1, T2, T3 et T4 sont des sous-arbres
+  //   x                     y
+  //  / \                   / \
+  // T1  y    rotation     x   T4
+  //    / \   ======>     / \
+  //   T2 T4             T1 T2
   rotateLeft(x) {
     const y = x.right;
     x.right = y.left;
@@ -35,6 +41,11 @@ export default class RedBlackTree {
     x.parent = y;
   }
 
+  //     y                     x
+  //    / \                   / \
+  //   x   T4     rotation   T1  y
+  //  / \         ======>       / \
+  // T1  T3                    T3  T4
   rotateRight(x) {
     const y = x.left;
     x.left = y.right;
@@ -57,7 +68,7 @@ export default class RedBlackTree {
     let x = this.root;
     let y = this.NilNode;
     const z = new RedBlackNode(key, 'red');
-    while (x !== this.NilNode && x !== null) {
+    while (x !== this.NilNode) {
       y = x;
       if (z.key < x.key) {
         x = x.left;

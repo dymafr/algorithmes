@@ -1,4 +1,4 @@
-import RBTree from './RedBlackTree';
+import RBTree from './RBTreeVideo';
 
 class RBTestTree extends RBTree {
   isRBTree() {

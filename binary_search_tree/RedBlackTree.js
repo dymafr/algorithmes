@@ -130,7 +130,7 @@ export default class RedBlackTree {
 
   search(key) {
     let x = this.root;
-    while (x !== this.NilNode && x !== null) {
+    while (x !== this.NilNode) {
       if (key === x.key) {
         return x;
       } else if (key < x.key) {
@@ -142,6 +142,7 @@ export default class RedBlackTree {
     return null;
   }
 
+  // Transplantation d'un sous-arbre
   transplant(u, v) {
     if (u.parent === this.NilNode) {
       this.root = v;
@@ -154,67 +155,96 @@ export default class RedBlackTree {
   }
 
   delete(key) {
+    // On recherche le noeud à supprimer
     const node = this.search(key);
+    // Si le noeud n'existe pas, on ne fait rien
     if (node === null) {
       return;
     }
     let y = node;
+    // On stocke la couleur du noeud à supprimer
     let yOriginalColor = y.color;
     let x;
+    // CAS 1 : Si le noeud à supprimer n'a pas de fils gauche (un seul fils droit)
     if (node.left === this.NilNode) {
       x = node.right;
+      // On remplace le noeud à supprimer par son fils droit
       this.transplant(node, node.right);
+      // CAS 2 : Si le noeud à supprimer n'a pas de fils droit (un seul fils gauche)
     } else if (node.right === this.NilNode) {
       x = node.left;
+      // On remplace le noeud à supprimer par son fils gauche
       this.transplant(node, node.left);
     } else {
+      // CAS 3 : Si le noeud à supprimer a deux fils
+      // On recherche le successeur du noeud à supprimer
       y = this.minimum(node.right);
+      // On stocke la couleur du successeur
       yOriginalColor = y.color;
+      // On stocke le fils droit du successeur
       x = y.right;
+      // Si le successeur est le fils droit du noeud à supprimer
       if (y !== node.right) {
+        // On remplace le successeur par son fils droit
         this.transplant(y, y.right);
+        // On place le fils droit du noeud à supprimer à la place du successeur
         y.right = node.right;
+        // On met à jour le parent du fils droit du noeud à supprimer
         y.right.parent = y;
       } else {
+        // On met à jour le parent du successeur
         x.parent = y;
       }
+      // On remplace le noeud à supprimer par le successeur
       this.transplant(node, y);
       y.left = node.left;
       y.left.parent = y;
       y.color = node.color;
     }
+    // Si la couleur du noeud à supprimer était noire
     if (yOriginalColor === 'black') {
+      // On rééquilibre l'arbre
       this.deleteFixup(x);
     }
   }
 
   deleteFixup(node) {
+    // Tant que le noeud n'est pas la racine et que la couleur du noeud est noire
     while (node !== this.root && node.color === 'black') {
+      // Si le noeud est le fils gauche de son parent
       if (node === node.parent.left) {
+        // On stocke le frère du noeud dans une variable w
         let w = node.parent.right;
+        // CAS 1 : Si le frère du noeud est rouge
         if (w.color === 'red') {
           w.color = 'black';
           node.parent.color = 'red';
           this.rotateLeft(node.parent);
           w = node.parent.right;
         }
+        // CAS 2 : Si les fils du frère du noeud sont noirs et que le frère du noeud est noir
         if (w.left.color === 'black' && w.right.color === 'black') {
           w.color = 'red';
           node = node.parent;
+          // On continue la boucle avec le parent du noeud
         } else {
+          // CAS 3 : Si le fils droit du frère du noeud est noir et que le fils gauche du frère du noeud est rouge et que le frère du noeud est noir
           if (w.right.color === 'black') {
             w.left.color = 'black';
             w.color = 'red';
             this.rotateRight(w);
             w = node.parent.right;
           }
+          // CAS 4 : Si le fils droit du frère du noeud est rouge et que le frère du noeud est noir
           w.color = node.parent.color;
           node.parent.color = 'black';
           w.right.color = 'black';
           this.rotateLeft(node.parent);
           node = this.root;
+          // On sort de la boucle
         }
       } else {
+        // Symétrique des 3 cas précédents, avec les fils gauche et droit inversés
         let w = node.parent.left;
         if (w.color === 'red') {
           w.color = 'black';

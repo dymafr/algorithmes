@@ -8,11 +8,11 @@ export function depthFirstSearch(graph, startingVertex) {
     }
     visited[vertex] = true;
     result.push(vertex);
-    graph.adjacencyList[vertex].forEach((neighbor) => {
-      if (!visited[neighbor]) {
-        return traverse(neighbor);
+    for (let i = 0; i < graph.adjacencyList[vertex].length; i++) {
+      if (!visited[graph.adjacencyList[vertex][i]]) {
+        return traverse(graph.adjacencyList[vertex][i]);
       }
-    });
+    }
   }
 
   traverse(startingVertex);

@@ -12,9 +12,9 @@ export function breadthFirstSearch(graph, startingVertex) {
     if (!visited[currentVertex]) {
       result.push(currentVertex);
       visited[currentVertex] = true;
-      graph.adjacencyList[currentVertex].forEach((neighbor) => {
-        queue.enqueue(neighbor);
-      });
+      for (let i = 0; i < graph.adjacencyList[currentVertex].length; i++) {
+        queue.enqueue(graph.adjacencyList[currentVertex][i]);
+      }
     }
   }
 

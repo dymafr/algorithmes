@@ -12,9 +12,11 @@ export function depthFirstSearch(graph, startingVertex) {
     if (!visited[currentVertex]) {
       result.push(currentVertex);
       visited[currentVertex] = true;
-      graph.adjacencyList[currentVertex].forEach((neighbor) => {
-        stack.push(neighbor);
-      });
+      for (let i = 0; i < graph.adjacencyList[currentVertex].length; i++) {
+        if (!visited[graph.adjacencyList[currentVertex][i]]) {
+          stack.push(graph.adjacencyList[currentVertex][i]);
+        }
+      }
     }
   }
 

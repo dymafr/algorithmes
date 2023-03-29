@@ -14,6 +14,16 @@ export class WeightedGraphAdjacencyList {
     this.adjacencyList[vertex2].push({ vertex: vertex1, weight });
   }
 
+  addDirectedEdge(vertex1, vertex2, weight) {
+    this.adjacencyList[vertex1].push({ vertex: vertex2, weight });
+  }
+
+  removeDirectedEdge(vertex1, vertex2) {
+    this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
+      (v) => v.vertex !== vertex2
+    );
+  }
+
   removeEdge(vertex1, vertex2) {
     this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
       (v) => v.vertex !== vertex2

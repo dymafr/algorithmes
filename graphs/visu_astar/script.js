@@ -1,11 +1,15 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 5;
+let fps = 10;
 let map = [];
-const nLignes = 20;
-const nColonnes = 20;
-const squareSize = 30;
-const nbrObstacles = 20;
-const obstacleMaxSize = 5;
+const nLignes = 15;
+const nColonnes = 15;
+const squareSize = 60;
+const nbrObstacles = 8;
+const obstacleMaxSize = 3;
+
+// Visu
+let distancesVisu = {};
+let pathLength = 0;
 
 // A*
 let distances;
@@ -13,6 +17,7 @@ let previous;
 let queue;
 let trouve;
 let posFin;
+let posDepart;
 
 let canvas = document.getElementById('moncanvas');
 let ctx = canvas.getContext('2d');
@@ -46,7 +51,7 @@ function init() {
   }
 
   // position aléatoire du début et de la fin (début à gauche et fin à droite)
-  const posDepart = getRandomNumber(0, nLignes - 1);
+  posDepart = getRandomNumber(0, nLignes - 1);
   posFin = getRandomNumber(0, nLignes - 1);
   map[posDepart][0] = 1;
   map[posFin][nColonnes - 1] = 2;
@@ -71,6 +76,8 @@ function init() {
 }
 
 function init_astar() {
+  distancesVisu = {};
+  pathLength = 0;
   distances = {};
   previous = {};
   queue = new MinPriorityQueue();
@@ -87,10 +94,17 @@ function init_astar() {
   }
 }
 
-function getManhattanDistance(x, y) {
+function getManhattanDistances(x, y) {
   const xFin = posFin;
   const yFin = nColonnes - 1;
-  return Math.abs(x - xFin) + Math.abs(y - yFin);
+  const xDebut = posDepart;
+  const yDebut = 0;
+  const distanceDebut = Math.abs(x - xDebut) + Math.abs(y - yDebut);
+  const distanceFin = Math.abs(x - xFin) + Math.abs(y - yFin);
+  return {
+    distanceDebut,
+    distanceFin,
+  };
 }
 
 function astarNextMove() {
@@ -106,18 +120,29 @@ function astarNextMove() {
   }
   for (const neighbor of getNeighbors(x, y)) {
     const [i, j] = neighbor.split('-').map((v) => parseInt(v, 10));
-    const newDistance = getManhattanDistance(i, j);
+    const { distanceDebut, distanceFin } = getManhattanDistances(i, j);
+    const newDistance = distanceFin + distanceDebut;
     if (newDistance < distances[neighbor]) {
       distances[neighbor] = newDistance;
       previous[neighbor] = vertex;
-      queue.insert({ vertex: neighbor, priority: newDistance });
+      queue.insert({
+        vertex: neighbor,
+        priority: newDistance,
+        secondaryPriority: distanceFin,
+      });
     }
+    distancesVisu[neighbor] = {
+      distanceDebut,
+      distanceFin,
+      total: newDistance,
+    };
   }
 }
 
 function constructEndPath(endVertex) {
   let previousVertex = previous[endVertex];
   while (previousVertex) {
+    pathLength++;
     const [x, y] = previousVertex.split('-').map((v) => parseInt(v, 10));
     if (map[x][y] === 1) break;
     map[x][y] = 4;
@@ -184,6 +209,14 @@ function renduCanvas() {
         );
         ctx.fillStyle = '#FFFFFF';
         ctx.fillText('A', j * squareSize + 5, i * squareSize + 15);
+        if (trouve) {
+          ctx.fillStyle = '#000000';
+          ctx.fillText(
+            `L: ${pathLength}`,
+            j * squareSize + 15,
+            i * squareSize + 40
+          );
+        }
       }
       // un mur
       if (map[i][j] === 7) {
@@ -216,6 +249,29 @@ function renduCanvas() {
         );
       }
     }
+  }
+
+  // Affichage des distances
+  for (const key in distancesVisu) {
+    const [x, y] = key.split('-').map((v) => parseInt(v, 10));
+    if (map[x][y] === 1 || map[x][y] === 2) continue;
+    ctx.fillStyle = '#000000';
+    ctx.fillText(
+      distancesVisu[key].distanceDebut,
+      y * squareSize + 5,
+      x * squareSize + 15
+    );
+    ctx.fillText(
+      distancesVisu[key].distanceFin,
+      y * squareSize + 40,
+      x * squareSize + 15
+    );
+    ctx.fillStyle = '#FF0000';
+    ctx.fillText(
+      distancesVisu[key].total,
+      y * squareSize + 20,
+      x * squareSize + 45
+    );
   }
   ctx.stroke();
 

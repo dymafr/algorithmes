@@ -1,5 +1,5 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 50;
+let fps = 60;
 let map = [];
 const nLignes = 20;
 const nColonnes = 20;

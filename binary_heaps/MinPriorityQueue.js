@@ -38,7 +38,12 @@ export default class MinPriorityQueue {
 
   heapifyUpRecursive(index = this.heap.length - 1) {
     let parentIndex = Math.floor((index - 1) / 2);
-    if (this.heap[parentIndex]?.priority > this.heap[index]?.priority) {
+    if (
+      this.heap[parentIndex]?.priority > this.heap[index]?.priority ||
+      (this.heap[parentIndex]?.priority === this.heap[index]?.priority &&
+        this.heap[parentIndex]?.secondaryPriority >
+          this.heap[index]?.secondaryPriority)
+    ) {
       this.swap(parentIndex, index);
       this.heapifyUpRecursive(parentIndex);
     }
@@ -51,14 +56,20 @@ export default class MinPriorityQueue {
 
     if (
       left < this.heap.length &&
-      this.heap[left].priority < this.heap[smallest].priority
+      (this.heap[left].priority < this.heap[smallest].priority ||
+        (this.heap[left].priority === this.heap[smallest].priority &&
+          this.heap[left].secondaryPriority <
+            this.heap[smallest].secondaryPriority))
     ) {
       smallest = left;
     }
 
     if (
       right < this.heap.length &&
-      this.heap[right].priority < this.heap[smallest].priority
+      (this.heap[right].priority < this.heap[smallest].priority ||
+        (this.heap[right].priority === this.heap[smallest].priority &&
+          this.heap[right].secondaryPriority <
+            this.heap[smallest].secondaryPriority))
     ) {
       smallest = right;
     }

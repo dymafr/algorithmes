@@ -1,5 +1,5 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 20;
+let fps = 60;
 let map = [];
 const nLignes = 12;
 const nColonnes = 15;
@@ -88,6 +88,7 @@ function dijkstraNextMove() {
   const [x, y] = vertex.split('-').map((v) => parseInt(v, 10));
   if (map[x][y] === 2) {
     trouve = true;
+    constructEndPath(vertex);
     return;
   }
   if (map[x][y] !== 1) {
@@ -101,6 +102,17 @@ function dijkstraNextMove() {
       previous[neighbor] = vertex;
       queue.insert({ vertex: neighbor, priority: newDistance });
     }
+  }
+}
+
+function constructEndPath(endVertex) {
+  console.log(previous);
+  let previousVertex = previous[endVertex];
+  while (previousVertex) {
+    const [x, y] = previousVertex.split('-').map((v) => parseInt(v, 10));
+    if (map[x][y] === 1) break;
+    map[x][y] = 4;
+    previousVertex = previous[previousVertex];
   }
 }
 
@@ -165,7 +177,7 @@ function renduCanvas() {
         ctx.fillText('A', j * squareSize + 5, i * squareSize + 15);
       }
       // un mur
-      if (map[i][j] == 7) {
+      if (map[i][j] === 7) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(
           j * squareSize + 1,
@@ -174,8 +186,18 @@ function renduCanvas() {
           squareSize - 2
         );
       }
+      // le tracé du chemin final
+      if (trouve && map[i][j] === 4) {
+        ctx.fillStyle = '#FFFF00';
+        ctx.fillRect(
+          j * squareSize + 1,
+          i * squareSize + 1,
+          squareSize - 2,
+          squareSize - 2
+        );
+      }
       // la zone explorée
-      if (map[i][j] == 3) {
+      if (map[i][j] === 3) {
         ctx.fillStyle = '#FF0000';
         ctx.fillText(
           'V',
@@ -183,15 +205,11 @@ function renduCanvas() {
           i * squareSize + Math.round(squareSize / 2) + 5
         );
       }
-
-      // le tracé du chemin final
-      if (trouve && map[i][j] == 8) {
-        ctx.fillStyle = '#FFFF00';
-        ctx.fillRect(i * squareSize + 1, j * squareSize + 1, 18, 18);
-      }
     }
   }
   ctx.stroke();
 
-  setTimeout(() => requestAnimationFrame(renduCanvas), 1000 / fps);
+  if (!trouve) {
+    setTimeout(() => requestAnimationFrame(renduCanvas), 1000 / fps);
+  }
 }

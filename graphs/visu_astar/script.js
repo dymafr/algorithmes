@@ -1,17 +1,18 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 50;
+let fps = 5;
 let map = [];
 const nLignes = 20;
 const nColonnes = 20;
 const squareSize = 30;
-const nbrObstacles = 5;
-const obstacleMaxSize = 2;
+const nbrObstacles = 20;
+const obstacleMaxSize = 5;
 
-// Dijkstra
+// A*
 let distances;
 let previous;
 let queue;
 let trouve;
+let posFin;
 
 let canvas = document.getElementById('moncanvas');
 let ctx = canvas.getContext('2d');
@@ -46,7 +47,7 @@ function init() {
 
   // position aléatoire du début et de la fin (début à gauche et fin à droite)
   const posDepart = getRandomNumber(0, nLignes - 1);
-  const posFin = getRandomNumber(0, nLignes - 1);
+  posFin = getRandomNumber(0, nLignes - 1);
   map[posDepart][0] = 1;
   map[posFin][nColonnes - 1] = 2;
   //   génération de murs aléatoires
@@ -65,11 +66,11 @@ function init() {
     }
   }
 
-  init_dijkstra();
+  init_astar();
   requestAnimationFrame(renduCanvas);
 }
 
-function init_dijkstra() {
+function init_astar() {
   distances = {};
   previous = {};
   queue = new MinPriorityQueue();
@@ -86,7 +87,13 @@ function init_dijkstra() {
   }
 }
 
-function dijkstraNextMove() {
+function getManhattanDistance(x, y) {
+  const xFin = posFin;
+  const yFin = nColonnes - 1;
+  return Math.abs(x - xFin) + Math.abs(y - yFin);
+}
+
+function astarNextMove() {
   const { vertex } = queue.extractMin();
   const [x, y] = vertex.split('-').map((v) => parseInt(v, 10));
   if (map[x][y] === 2) {
@@ -98,7 +105,8 @@ function dijkstraNextMove() {
     map[x][y] = 3;
   }
   for (const neighbor of getNeighbors(x, y)) {
-    const newDistance = distances[vertex] + 1;
+    const [i, j] = neighbor.split('-').map((v) => parseInt(v, 10));
+    const newDistance = getManhattanDistance(i, j);
     if (newDistance < distances[neighbor]) {
       distances[neighbor] = newDistance;
       previous[neighbor] = vertex;
@@ -149,7 +157,7 @@ function renduCanvas() {
     ctx.lineTo(nColonnes * squareSize, i * squareSize);
   }
 
-  if (!trouve) dijkstraNextMove();
+  if (!trouve) astarNextMove();
 
   for (let i = 0; i < nLignes; i++) {
     for (let j = 0; j < nColonnes; j++) {

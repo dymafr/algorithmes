@@ -13,7 +13,6 @@ export function dijkstraPriorityQueue(graph, startVertex, endVertex) {
       queue.insert({ vertex, priority: 0 });
     } else {
       distances[vertex] = Infinity;
-      queue.insert({ vertex, priority: Infinity });
     }
   }
 

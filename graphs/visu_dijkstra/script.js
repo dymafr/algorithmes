@@ -106,7 +106,6 @@ function dijkstraNextMove() {
 }
 
 function constructEndPath(endVertex) {
-  console.log(previous);
   let previousVertex = previous[endVertex];
   while (previousVertex) {
     const [x, y] = previousVertex.split('-').map((v) => parseInt(v, 10));
@@ -186,6 +185,16 @@ function renduCanvas() {
           squareSize - 2
         );
       }
+      // la zone explorée
+      if (map[i][j] === 3) {
+        ctx.fillStyle = '#26c4ec';
+        ctx.fillRect(
+          j * squareSize + 2,
+          i * squareSize + 2,
+          squareSize - 2,
+          squareSize - 2
+        );
+      }
       // le tracé du chemin final
       if (trouve && map[i][j] === 4) {
         ctx.fillStyle = '#FFFF00';
@@ -194,15 +203,6 @@ function renduCanvas() {
           i * squareSize + 1,
           squareSize - 2,
           squareSize - 2
-        );
-      }
-      // la zone explorée
-      if (map[i][j] === 3) {
-        ctx.fillStyle = '#FF0000';
-        ctx.fillText(
-          'V',
-          j * squareSize + Math.round(squareSize / 2) - 5,
-          i * squareSize + Math.round(squareSize / 2) + 5
         );
       }
     }

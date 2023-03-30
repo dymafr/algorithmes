@@ -1,17 +1,17 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 60;
+let fps = 50;
 let map = [];
-const nLignes = 12;
-const nColonnes = 15;
-const squareSize = 60;
-const nbrObstacles = 3;
+const nLignes = 20;
+const nColonnes = 20;
+const squareSize = 30;
+const nbrObstacles = 5;
 const obstacleMaxSize = 2;
 
 // Dijkstra
-const distances = {};
-const previous = {};
-const queue = new MinPriorityQueue();
-let trouve = false;
+let distances;
+let previous;
+let queue;
+let trouve;
 
 let canvas = document.getElementById('moncanvas');
 let ctx = canvas.getContext('2d');
@@ -22,8 +22,6 @@ canvas.height = nLignes * squareSize;
 init();
 
 document.addEventListener('keydown', keyDownListener);
-
-requestAnimationFrame(renduCanvas);
 
 function keyDownListener(event) {
   if (event.key === 'm') {
@@ -68,9 +66,14 @@ function init() {
   }
 
   init_dijkstra();
+  requestAnimationFrame(renduCanvas);
 }
 
 function init_dijkstra() {
+  distances = {};
+  previous = {};
+  queue = new MinPriorityQueue();
+  trouve = false;
   for (let i = 0; i < nLignes; i++) {
     for (let j = 0; j < nColonnes; j++) {
       if (map[i][j] === 1) {

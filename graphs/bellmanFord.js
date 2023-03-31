@@ -23,12 +23,18 @@ export function bellmanFord(graph, startVertex) {
       for (const neighbor of graph.adjacencyList[vertex]) {
         const distance = distances[vertex] + neighbor.weight;
         if (distance < distances[neighbor.vertex]) {
-          if (iteration === Object.keys(graph.adjacencyList).length - 2) {
-            throw new Error('Graph contains a negative weight cycle');
-          }
           distances[neighbor.vertex] = distance;
           previousVertices[neighbor.vertex] = vertex;
         }
+      }
+    }
+  }
+
+  for (const vertex in graph.adjacencyList) {
+    for (const neighbor of graph.adjacencyList[vertex]) {
+      const distance = distances[vertex] + neighbor.weight;
+      if (distance < distances[neighbor.vertex]) {
+        throw new Error('Graph contains a negative weight cycle');
       }
     }
   }

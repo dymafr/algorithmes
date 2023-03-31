@@ -1,8 +1,8 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 10;
+let fps = 60;
 let map = [];
 const nLignes = 15;
-const nColonnes = 15;
+const nColonnes = 20;
 const squareSize = 60;
 const nbrObstacles = 8;
 const obstacleMaxSize = 3;
@@ -10,12 +10,15 @@ const obstacleMaxSize = 3;
 // Visu
 let distancesVisu = {};
 let pathLength = 0;
+let nbrOfVisitedCases = 0;
+let nbrObstaclesCases = 0;
 
 // A*
 let gScores;
 let fScores;
 let cameFrom;
 let openSet;
+let end;
 let trouve;
 let posFin;
 let posDepart;
@@ -67,6 +70,7 @@ function init() {
         // pas d'obstacle sur le départ ou l'arrivée
         if (j > 0 && j < nLignes - 1 && k > 0 && k < nColonnes - 1) {
           map[j][k] = 7;
+          nbrObstaclesCases++;
         }
       }
     }
@@ -83,6 +87,7 @@ function init_astar() {
   fScores = {};
   cameFrom = {};
   openSet = new MinPriorityQueue();
+  end = false;
   trouve = false;
   for (let i = 0; i < nLignes; i++) {
     for (let j = 0; j < nColonnes; j++) {
@@ -104,11 +109,14 @@ function getManhattanDistance(x, y) {
 
 function astarNextMove() {
   if (openSet.isEmpty()) {
-    throw new Error('Pas de solution');
+    end = true;
+    return;
   }
   const { vertex } = openSet.extractMin();
+  nbrOfVisitedCases++;
   const [x, y] = vertex.split('-').map((v) => parseInt(v, 10));
   if (map[x][y] === 2) {
+    end = true;
     trouve = true;
     constructEndPath(vertex);
     return;
@@ -123,9 +131,7 @@ function astarNextMove() {
       cameFrom[neighbor] = vertex;
       gScores[neighbor] = tentativeGScore;
       fScores[neighbor] = tentativeGScore + getManhattanDistance(i, j);
-      //   if (!openSet.has(neighbor)) {
       openSet.insert({ vertex: neighbor, priority: fScores[neighbor] });
-      //   }
     }
     distancesVisu[neighbor] = {
       distanceDebut: gScores[neighbor],
@@ -178,7 +184,7 @@ function renduCanvas() {
     ctx.lineTo(nColonnes * squareSize, i * squareSize);
   }
 
-  if (!trouve) astarNextMove();
+  if (!end) astarNextMove();
 
   for (let i = 0; i < nLignes; i++) {
     for (let j = 0; j < nColonnes; j++) {
@@ -205,7 +211,7 @@ function renduCanvas() {
         );
         ctx.fillStyle = '#FFFFFF';
         ctx.fillText('A', j * squareSize + 5, i * squareSize + 15);
-        if (trouve) {
+        if (end) {
           ctx.fillStyle = '#000000';
           ctx.fillText(
             `L: ${pathLength}`,
@@ -271,7 +277,29 @@ function renduCanvas() {
   }
   ctx.stroke();
 
-  if (!trouve) {
+  if (!end) {
     setTimeout(() => requestAnimationFrame(renduCanvas), 1000 / fps);
+  } else {
+    console.log(`
+        Nombre d'obstacles : ${nbrObstaclesCases},
+        Nombre de cases explorées : ${nbrOfVisitedCases},
+        Longueur du chemin : ${pathLength},
+        Nombre de cases : ${nLignes * nColonnes},
+    `);
   }
+  if (!trouve && end) {
+    drawText('Pas de solution');
+  }
+}
+
+function drawText(text) {
+  ctx.beginPath();
+  ctx.font = '60px serif';
+  ctx.fillStyle = '#FF0000';
+  ctx.fillText(
+    text,
+    Math.round((nColonnes / 2) * squareSize - 150),
+    Math.round((nLignes / 2) * squareSize)
+  );
+  ctx.stroke();
 }

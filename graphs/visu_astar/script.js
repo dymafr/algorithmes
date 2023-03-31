@@ -12,9 +12,10 @@ let distancesVisu = {};
 let pathLength = 0;
 
 // A*
-let distances;
-let previous;
-let queue;
+let gScores;
+let fScores;
+let cameFrom;
+let openSet;
 let trouve;
 let posFin;
 let posDepart;
@@ -55,7 +56,7 @@ function init() {
   posFin = getRandomNumber(0, nLignes - 1);
   map[posDepart][0] = 1;
   map[posFin][nColonnes - 1] = 2;
-  //   génération de murs aléatoires
+  // génération de murs aléatoires
   for (let i = 1; i <= nbrObstacles; i++) {
     const x = getRandomNumber(1, nLignes - obstacleMaxSize);
     const y = getRandomNumber(1, nColonnes - obstacleMaxSize);
@@ -78,37 +79,34 @@ function init() {
 function init_astar() {
   distancesVisu = {};
   pathLength = 0;
-  distances = {};
-  previous = {};
-  queue = new MinPriorityQueue();
+  gScores = {};
+  fScores = {};
+  cameFrom = {};
+  openSet = new MinPriorityQueue();
   trouve = false;
   for (let i = 0; i < nLignes; i++) {
     for (let j = 0; j < nColonnes; j++) {
       if (map[i][j] === 1) {
-        distances[`${i}-${j}`] = 0;
-        queue.insert({ vertex: `${i}-${j}`, priority: 0 });
+        gScores[`${i}-${j}`] = 0;
+        fScores[`${i}-${j}`] = 0 + getManhattanDistance(i, j);
+        openSet.insert({ vertex: `${i}-${j}`, priority: fScores[`${i}-${j}`] });
       } else {
-        distances[`${i}-${j}`] = Infinity;
+        gScores[`${i}-${j}`] = Infinity;
+        fScores[`${i}-${j}`] = Infinity;
       }
     }
   }
 }
 
-function getManhattanDistances(x, y) {
-  const xFin = posFin;
-  const yFin = nColonnes - 1;
-  const xDebut = posDepart;
-  const yDebut = 0;
-  const distanceDebut = Math.abs(x - xDebut) + Math.abs(y - yDebut);
-  const distanceFin = Math.abs(x - xFin) + Math.abs(y - yFin);
-  return {
-    distanceDebut,
-    distanceFin,
-  };
+function getManhattanDistance(x, y) {
+  return Math.abs(x - posFin) + Math.abs(y - (nColonnes - 1));
 }
 
 function astarNextMove() {
-  const { vertex } = queue.extractMin();
+  if (openSet.isEmpty()) {
+    throw new Error('Pas de solution');
+  }
+  const { vertex } = openSet.extractMin();
   const [x, y] = vertex.split('-').map((v) => parseInt(v, 10));
   if (map[x][y] === 2) {
     trouve = true;
@@ -120,33 +118,31 @@ function astarNextMove() {
   }
   for (const neighbor of getNeighbors(x, y)) {
     const [i, j] = neighbor.split('-').map((v) => parseInt(v, 10));
-    const { distanceDebut, distanceFin } = getManhattanDistances(i, j);
-    const newDistance = distanceFin + distanceDebut;
-    if (newDistance < distances[neighbor]) {
-      distances[neighbor] = newDistance;
-      previous[neighbor] = vertex;
-      queue.insert({
-        vertex: neighbor,
-        priority: newDistance,
-        secondaryPriority: distanceFin,
-      });
+    const tentativeGScore = gScores[vertex] + 1;
+    if (tentativeGScore < gScores[neighbor]) {
+      cameFrom[neighbor] = vertex;
+      gScores[neighbor] = tentativeGScore;
+      fScores[neighbor] = tentativeGScore + getManhattanDistance(i, j);
+      //   if (!openSet.has(neighbor)) {
+      openSet.insert({ vertex: neighbor, priority: fScores[neighbor] });
+      //   }
     }
     distancesVisu[neighbor] = {
-      distanceDebut,
-      distanceFin,
-      total: newDistance,
+      distanceDebut: gScores[neighbor],
+      distanceFin: getManhattanDistance(i, j),
+      total: fScores[neighbor],
     };
   }
 }
 
 function constructEndPath(endVertex) {
-  let previousVertex = previous[endVertex];
-  while (previousVertex) {
+  let cameFromVertex = cameFrom[endVertex];
+  while (cameFromVertex) {
     pathLength++;
-    const [x, y] = previousVertex.split('-').map((v) => parseInt(v, 10));
+    const [x, y] = cameFromVertex.split('-').map((v) => parseInt(v, 10));
     if (map[x][y] === 1) break;
     map[x][y] = 4;
-    previousVertex = previous[previousVertex];
+    cameFromVertex = cameFrom[cameFromVertex];
   }
 }
 

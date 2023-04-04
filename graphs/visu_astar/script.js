@@ -1,5 +1,5 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
-let fps = 60;
+let fps = 20;
 let map = [];
 const nLignes = 15;
 const nColonnes = 20;
@@ -97,7 +97,6 @@ function init_astar() {
         openSet.insert({ vertex: `${i}-${j}`, priority: fScores[`${i}-${j}`] });
       } else {
         gScores[`${i}-${j}`] = Infinity;
-        fScores[`${i}-${j}`] = Infinity;
       }
     }
   }
@@ -130,8 +129,10 @@ function astarNextMove() {
     if (tentativeGScore < gScores[neighbor]) {
       cameFrom[neighbor] = vertex;
       gScores[neighbor] = tentativeGScore;
-      fScores[neighbor] = tentativeGScore + getManhattanDistance(i, j);
-      openSet.insert({ vertex: neighbor, priority: fScores[neighbor] });
+      if (!fScores[neighbor]) {
+        fScores[neighbor] = tentativeGScore + getManhattanDistance(i, j);
+        openSet.insert({ vertex: neighbor, priority: fScores[neighbor] });
+      }
     }
     distancesVisu[neighbor] = {
       distanceDebut: gScores[neighbor],

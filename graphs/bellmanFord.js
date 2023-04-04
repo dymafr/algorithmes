@@ -1,4 +1,4 @@
-// Complexité temporellet : O(V * E) => O(V²) ou au pire O(V³)
+// Complexité temporelle : O(V * E) => O(V²) ou au pire O(V³)
 // Complexité spatiale : O(V)
 export function bellmanFord(graph, startVertex) {
   const distances = {};

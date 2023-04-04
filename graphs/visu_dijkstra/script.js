@@ -1,11 +1,11 @@
 import MinPriorityQueue from '../../binary_heaps/MinPriorityQueue.js';
 let fps = 60;
 let map = [];
-const nLignes = 20;
-const nColonnes = 20;
-const squareSize = 30;
-const nbrObstacles = 5;
-const obstacleMaxSize = 2;
+const nLignes = 30;
+const nColonnes = 30;
+const squareSize = 25;
+const nbrObstacles = 35;
+const obstacleMaxSize = 3;
 
 // Dijkstra
 let distances;
@@ -19,7 +19,7 @@ let ctx = canvas.getContext('2d');
 canvas.width = nColonnes * squareSize;
 canvas.height = nLignes * squareSize;
 
-init();
+// init();
 
 document.addEventListener('keydown', keyDownListener);
 
